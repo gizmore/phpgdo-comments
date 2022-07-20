@@ -87,17 +87,17 @@ class Edit extends MethodForm
 	
 	public function createForm(GDT_Form $form) : void
 	{
-		$form->addFields([
+		$form->addFields(
 // 			$this->comment->gdoColumn('comment_title'),
 			$this->comment->gdoColumn('comment_message'),
 			$this->comment->gdoColumn('comment_file'),
 			$this->comment->gdoColumn('comment_top'),
 			GDT_AntiCSRF::make(),
-		]);
-		$form->actions()->addFields([
+		);
+		$form->actions()->addFields(
 			GDT_Submit::make(),
 			GDT_DeleteButton::make(),
-		]);
+		);
 		
 		if (!$this->comment->isApproved())
 		{
