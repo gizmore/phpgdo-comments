@@ -28,7 +28,7 @@ use GDO\UI\GDT_DeleteButton;
  */
 class Edit extends MethodForm
 {
-    public function showInSitemap() { return false; }
+    public function showInSitemap() : bool { return false; }
     
 	public function gdoParameters() : array
 	{
