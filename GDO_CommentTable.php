@@ -43,7 +43,7 @@ class GDO_CommentTable extends GDO
 	/**
 	 * @return GDO
 	 */
-	public function getCommentedObject() { return $this->getValue('comment_object'); }
+	public function getCommentedObject() { return $this->gdoValue('comment_object'); }
 	
 	public static function getCommentedObjectByComment(GDO_Comment $comment, $fetchAs=null)
 	{

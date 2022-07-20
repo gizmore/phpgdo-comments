@@ -61,13 +61,13 @@ final class GDO_Comment extends GDO
 	/**
 	 * @return GDO_File
 	 */
-	public function getFile() { return $this->getValue('comment_file'); }
+	public function getFile() { return $this->gdoValue('comment_file'); }
 	public function hasFile() { return $this->getFileID() !== null; }
 	public function getFileID() { return $this->gdoVar('comment_file'); }
 	/**
 	 * @return GDO_User
 	 */
-	public function getCreator() { return $this->getValue('comment_creator'); }
+	public function getCreator() { return $this->gdoValue('comment_creator'); }
 	public function getCreatorID() { return $this->gdoVar('comment_creator'); }
 	public function getCreateDate() { return $this->gdoVar('comment_created'); }
 	

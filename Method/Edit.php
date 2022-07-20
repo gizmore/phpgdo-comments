@@ -73,7 +73,7 @@ class Edit extends MethodForm
 		}
 	}
 	
-	public function afterExecute()
+	public function afterExecute() : void
 	{
 	    if (!$this->comment->isDeleted())
 	    {
