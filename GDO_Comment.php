@@ -78,7 +78,7 @@ final class GDO_Comment extends GDO
 	public function isApproved() { return $this->gdoVar('comment_approved') !== null; }
 	public function isDeleted() : bool { return $this->gdoVar('comment_deleted') !== null; }
 	
-	public function renderCard()
+	public function renderCard() : string
 	{
 		return GDT_Template::php('Comment', 'card/comment.php', ['gdo' => $this]);
 	}
