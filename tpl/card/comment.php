@@ -10,19 +10,19 @@ $user = GDO_User::current();
 
 $card = GDT_Card::make()->gdo($gdo);
 $card->creatorHeader();
-$card->addFields(array(
+$card->addFields(
 	GDT_HTML::make('comment_message')->html($gdo->displayMessage()),
-));
+);
 
 if ($gdo->hasFile())
 {
-	$card->addFields(array(
+	$card->addFields(
 		$gdo->gdoColumn('comment_file'),
-	));
+	);
 }
 
-$card->actions()->addFields(array(
+$card->actions()->addFields(
 	GDT_EditButton::make()->href($gdo->hrefEdit())->writable($gdo->canEdit($user)),
-));
+);
 
 echo $card->render();

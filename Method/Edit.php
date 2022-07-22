@@ -142,7 +142,7 @@ class Edit extends MethodForm
 		
 		Approve::make()->sendEmail($this->comment);
 		
-		Website::redirect(href('Comment', 'Admin', 12));
-		return $this->message('msg_comment_approved')->addField($this->renderPage());
+		$href = href('Comment', 'Admin', 12);
+		return $this->redirectMessage('msg_comment_approved', $href)->addField($this->renderPage());
 	}
 }

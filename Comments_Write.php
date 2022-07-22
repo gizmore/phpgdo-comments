@@ -61,9 +61,9 @@ abstract class Comments_Write extends MethodForm
 			}
 		}
 		
-		$form->addFields(array(
+		$form->addFields(
 			GDT_AntiCSRF::make(),
-		));
+		);
 		$form->actions()->addField(GDT_Submit::make());
 		
 		if (1 === $this->gdoCommentsTable()->gdoMaxComments(GDO_User::current()))
@@ -90,8 +90,8 @@ abstract class Comments_Write extends MethodForm
 	public function successMessage()
 	{
 	    return Module_Comments::instance()->cfgApproval() ? 
-	    Website::redirectMessage('msg_comment_added_approval', null, $this->hrefList()) :
-	    Website::redirectMessage('msg_comment_added', null, $this->hrefList());
+	    $this->redirectMessage('msg_comment_added_approval', null, $this->hrefList()) :
+	    $this->redirectMessage('msg_comment_added', null, $this->hrefList());
 	}
 	
 	public function formValidated(GDT_Form $form)
