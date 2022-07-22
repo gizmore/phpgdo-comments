@@ -21,7 +21,7 @@ final class Module_Comments extends GDO_Module
 	public function getDependencies() : array { return ['Votes', 'File']; }
 	public function getClasses() : array { return [GDO_Comment::class, GDO_CommentLike::class]; }
 	public function onLoadLanguage() : void { $this->loadLanguage('lang/comments'); }
-	public function href_administrate_module()  { return href('Comment', 'Admin'); }
+	public function href_administrate_module()  { return href('Comments', 'Admin'); }
 	
 	##############
 	### Config ###

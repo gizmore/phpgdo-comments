@@ -15,6 +15,8 @@ use GDO\Core\Website;
 use GDO\UI\GDT_Redirect;
 use GDO\Core\GDT_Response;
 use GDO\UI\GDT_DeleteButton;
+use GDO\UI\GDT_Page;
+use GDO\UI\GDT_Card;
 
 /**
  * Edit a comment.
@@ -73,15 +75,20 @@ class Edit extends MethodForm
 		}
 	}
 	
+	/**
+	 * After execution we show the card again,
+	 * unless the comment got deleted, then we redirect back.
+	 */
 	public function afterExecute() : void
 	{
+		$response = GDT_Page::$INSTANCE->topResponse();
 	    if (!$this->comment->isDeleted())
 	    {
-	        return GDT_Response::makeWithHTML($this->comment->renderCard());
+	    	$response->addField($this->comment);
 	    }
 	    else
 	    {
-	        return Website::redirectBack(6);
+	        $response->addField($this->redirectBack());
 	    }
 	}
 	
@@ -142,7 +149,7 @@ class Edit extends MethodForm
 		
 		Approve::make()->sendEmail($this->comment);
 		
-		$href = href('Comment', 'Admin', 12);
+		$href = href('Comments', 'Admin', 12);
 		return $this->redirectMessage('msg_comment_approved', $href)->addField($this->renderPage());
 	}
 }

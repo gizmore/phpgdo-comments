@@ -31,7 +31,7 @@ class GDO_CommentTable extends GDO
 	/**
 	 * @return GDO
 	 */
-	public function gdoAbstract() { return !$this->gdoCommentedObjectTable(); }
+	public function gdoAbstract() : bool { return !$this->gdoCommentedObjectTable(); }
 	public function gdoColumns() : array
 	{
 		return array(

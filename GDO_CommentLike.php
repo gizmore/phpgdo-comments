@@ -1,7 +1,7 @@
 <?php
 namespace GDO\Comments;
 
-use GDO\Vote\GDO_LikeTable;
+use GDO\Votes\GDO_LikeTable;
 
 /**
  * It is possible to like comments.

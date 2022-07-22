@@ -7,8 +7,8 @@ use GDO\File\GDT_File;
 use GDO\Core\GDT_Template;
 use GDO\UI\GDT_Message;
 use GDO\User\GDO_User;
-use GDO\Vote\GDT_LikeCount;
-use GDO\Vote\WithLikes;
+use GDO\Votes\GDT_LikeCount;
+use GDO\Votes\WithLikes;
 use GDO\Date\GDT_DateTime;
 use GDO\User\GDT_User;
 use GDO\Core\GDT_AutoInc;
@@ -80,7 +80,7 @@ final class GDO_Comment extends GDO
 	
 	public function renderCard() : string
 	{
-		return GDT_Template::php('Comment', 'card/comment.php', ['gdo' => $this]);
+		return GDT_Template::php('Comments', 'comment_card.php', ['gdo' => $this]);
 	}
 	
 	public function canEdit(GDO_User $user)
@@ -95,7 +95,7 @@ final class GDO_Comment extends GDO
 	
 	public function hrefEdit()
 	{
-		return href('Comment', 'Edit', '&id='.$this->getID());
+		return href('Comments', 'Edit', '&id='.$this->getID());
 	}
 	
 	public function href_edit()
@@ -105,12 +105,12 @@ final class GDO_Comment extends GDO
 	
 	public function urlApprove()
 	{
-		return url('Comment', 'Approve', '&id='.$this->getID().'&token='.$this->gdoHashcode());
+		return url('Comments', 'Approve', '&id='.$this->getID().'&token='.$this->gdoHashcode());
 	}
 	
 	public function urlDelete()
 	{
-		return url('Comment', 'Delete', '&id='.$this->getID().'&token='.$this->gdoHashcode());
+		return url('Comments', 'Delete', '&id='.$this->getID().'&token='.$this->gdoHashcode());
 	}
 	
 }

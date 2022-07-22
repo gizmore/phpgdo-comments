@@ -21,10 +21,10 @@ final class Admin extends MethodQueryTable
 
 	public function gdoHeaders() : array
 	{
-		return array_merge([
+		return array_merge(
 			GDT_EditButton::make(),
 			parent::gdoHeaders(),
-		]);
+		);
 	}
 	
 	public function getQuery()

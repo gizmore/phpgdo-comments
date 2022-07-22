@@ -67,7 +67,7 @@ final class Approve extends Method
 			'user' => $user,
 			'comment' => $comment,
 		];
-		$mail->setBody(GDT_Template::phpUser($user, 'Comment', 'mail/approved_comment.php', $tVars));
+		$mail->setBody(GDT_Template::phpUser($user, 'Comments', 'mail/approved_comment.php', $tVars));
 		$mail->sendToUser($user);
 	}
 }

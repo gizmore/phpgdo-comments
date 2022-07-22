@@ -68,7 +68,7 @@ final class Delete extends Method
 			'user' => $user,
 			'comment' => $comment,
 		];
-		$mail->setBody(GDT_Template::phpUser($user, 'Comment', 'mail/deleted_comment.php', $tVars));
+		$mail->setBody(GDT_Template::phpUser($user, 'Comments', 'mail/deleted_comment.php', $tVars));
 		$mail->sendToUser($user);
 	}
 	

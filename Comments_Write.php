@@ -1,7 +1,6 @@
 <?php
 namespace GDO\Comments;
 
-use GDO\Core\Website;
 use GDO\Core\GDO;
 use GDO\Form\GDT_AntiCSRF;
 use GDO\Form\GDT_Form;
@@ -154,7 +153,7 @@ abstract class Comments_Write extends MethodForm
 			'href_approve' => $comment->urlApprove(),
 			'href_delete' => $comment->urlDelete(),
 		);
-		$mail->setBody(GDT_Template::phpUser($user, 'Comment', 'mail/new_comment.php', $tVars));
+		$mail->setBody(GDT_Template::phpUser($user, 'Comments', 'mail/new_comment.php', $tVars));
 		$mail->setSender(GDO_BOT_EMAIL);
 		$mail->sendToUser($user);
 	}

@@ -1,5 +1,5 @@
 <?php
-use GDO\Comment\GDO_Comment;
+use GDO\Comments\GDO_Comment;
 use GDO\UI\GDT_EditButton;
 use GDO\User\GDO_User;
 use GDO\UI\GDT_Card;
