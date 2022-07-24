@@ -22,7 +22,7 @@ if ($gdo->hasFile())
 }
 
 $card->actions()->addFields(
-	GDT_EditButton::make()->href($gdo->hrefEdit())->writable($gdo->canEdit($user)),
+	GDT_EditButton::make()->href($gdo->hrefEdit())->writeable($gdo->canEdit($user)),
 );
 
 echo $card->render();

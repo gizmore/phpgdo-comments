@@ -14,7 +14,7 @@ return [
 'msg_comment_added' => 'Your comment has been added and is visible to the public.',
 'msg_comment_added_approval' => 'Your comment has been added but it needs to be approved before it is shown.',
 ###########
-'ft_comment_edit' => 'Edit comment',
+'mt_comment_edit' => 'Edit comment',
 'msg_comment_edited' => 'The comment has been edited.',
 'msg_comment_approved' => 'The comment has been approved.',
 'err_comment_already_approved' => 'The comment was already appproved.',
@@ -29,7 +29,7 @@ return [
 'cfg_comment_captcha_guest' => 'Captcha for guests?',
 'cfg_comment_captcha_member' => 'Captcha for members?',
 
-'mdescr_comment_admin' => 'Manage comments',
+'md_comment_admin' => 'Manage comments',
 
-'ft_list_comments' => 'Comments on %s',
+'mt_list_comments' => 'Comments on %s',
 ];

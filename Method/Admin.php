@@ -3,6 +3,7 @@ namespace GDO\Comments\Method;
 
 use GDO\Table\MethodQueryTable;
 use GDO\Comments\GDO_Comment;
+use GDO\Core\GDO;
 use GDO\UI\GDT_EditButton;
 
 /**
@@ -14,7 +15,7 @@ final class Admin extends MethodQueryTable
 {
 	public function getPermission() : ?string { return 'staff'; }
 	
-    public function gdoTable()
+    public function gdoTable() : GDO
     {
         return GDO_Comment::table();
     }
@@ -22,7 +23,7 @@ final class Admin extends MethodQueryTable
 	public function gdoHeaders() : array
 	{
 		return array_merge(
-			GDT_EditButton::make(),
+			[GDT_EditButton::make()],
 			parent::gdoHeaders(),
 		);
 	}

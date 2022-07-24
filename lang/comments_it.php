@@ -13,7 +13,7 @@ return [
 'msg_comment_added' => 'Il vostro commento é stato aggiunto.',
 'msg_comment_added_approval' => 'Ihr Kommentar wurde hinzugefügt, aber muss noch geprüft werden vor einer Veröffentlichung.',
 ###########
-'ft_comment_edit' => 'Modifica commento',
+'mt_comment_edit' => 'Modifica commento',
 'msg_comment_edited' => 'Il commento é stato modificato',
 'msg_comment_approved' => 'Der Kommentar wurde freigegeben.',
 'err_comment_already_approved' => 'Der Kommentar ist bereits freigegeben.',
@@ -28,5 +28,5 @@ return [
 'cfg_comment_captcha_guest' => 'Captcha for guests?',
 'cfg_comment_captcha_member' => 'Captcha for members?',
 
-'mdescr_comment_admin' => 'Administrare commenti',
+'md_comment_admin' => 'Administrare commenti',
 ];

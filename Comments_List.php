@@ -27,7 +27,7 @@ abstract class Comments_List extends MethodQueryCards
     public function setupTitle(GDT_Table $table)
     {
     	$gdoName = $this->gdoCommentsTable()->gdoHumanName();
-    	Website::setTitle(t('ft_list_comments', [$gdoName]));
+    	Website::setTitle(t('mt_list_comments', [$gdoName]));
     	$table->title('list_comments', [$table->countItems]);
     }
         
@@ -37,7 +37,7 @@ abstract class Comments_List extends MethodQueryCards
 	 * @return GDO_CommentTable
 	 */
 	public abstract function gdoCommentsTable();
-	public function gdoTable() { return $this->gdoCommentsTable(); }
+	public function gdoTable() : GDO { return $this->gdoCommentsTable(); }
 	
 	public abstract function hrefAdd();
 	
@@ -46,7 +46,7 @@ abstract class Comments_List extends MethodQueryCards
 	 */
 	protected $object;
 	
-	public function onInit() : void
+	public function onInit()
 	{
 		parent::onInit();
 		$this->object = $this->gdoCommentsTable()->gdoCommentedObjectTable()->find(Common::getRequestString('id'));
