@@ -28,7 +28,7 @@ use GDO\Core\GDT_DeletedBy;
  * @see CommentedObject
  * 
  * @author gizmore@wechall.net
- * @version 7.0.0
+ * @version 7.0.1
  * @since 6.0.0
  */
 final class GDO_Comment extends GDO
@@ -38,9 +38,8 @@ final class GDO_Comment extends GDO
 	
 	public function gdoColumns() : array
 	{
-		return array(
+		return [
 			GDT_AutoInc::make('comment_id'),
-// 			GDT_String::make('comment_title')->notNull(),
 			GDT_Message::make('comment_message')->notNull(),
 			GDT_File::make('comment_file'),
 			GDT_LikeCount::make('comment_likes'),
@@ -53,29 +52,24 @@ final class GDO_Comment extends GDO
 			GDT_EditedBy::make('comment_editor'),
 			GDT_DeletedAt::make('comment_deleted'),
 			GDT_DeletedBy::make('comment_deletor'),
-		);		
+		];
 	}
 	
 	public function getID() : ?string { return $this->gdoVar('comment_id'); }
 	
-	/**
-	 * @return GDO_File
-	 */
-	public function getFile() { return $this->gdoValue('comment_file'); }
-	public function hasFile() { return $this->getFileID() !== null; }
-	public function getFileID() { return $this->gdoVar('comment_file'); }
-	/**
-	 * @return GDO_User
-	 */
-	public function getCreator() { return $this->gdoValue('comment_creator'); }
-	public function getCreatorID() { return $this->gdoVar('comment_creator'); }
-	public function getCreateDate() { return $this->gdoVar('comment_created'); }
+	public function getFile() : ?GDO_File { return $this->gdoValue('comment_file'); }
+	public function hasFile() : bool { return $this->getFileID() !== null; }
+	public function getFileID() : ?string { return $this->gdoVar('comment_file'); }
+
+	public function getCreator() : GDO_User { return $this->gdoValue('comment_creator'); }
+	public function getCreatorID() : string { return $this->gdoVar('comment_creator'); }
+	public function getCreateDate() : string { return $this->gdoVar('comment_created'); }
 	
-// 	public function getTitle() { return $this->gdoVar('comment_title');  }
-	public function getMessage() { return $this->gdoVar('comment_message');  }
-	public function displayMessage() { return $this->gdoColumn('comment_message')->renderCell();  }
+// 	public function getMessage() { return $this->gdoVar('comment_message_output');  }
+	public function displayMessage() : string { return $this->gdoVar('comment_message_output');  }
+// 	public function displayMessage() { return $this->gdoColumn('comment_message')->renderCell();  }
 	
-	public function isApproved() { return $this->gdoVar('comment_approved') !== null; }
+	public function isApproved() : bool { return $this->gdoVar('comment_approved') !== null; }
 	public function isDeleted() : bool { return $this->gdoVar('comment_deleted') !== null; }
 	
 	public function renderCard() : string
@@ -83,34 +77,34 @@ final class GDO_Comment extends GDO
 		return GDT_Template::php('Comments', 'comment_card.php', ['gdo' => $this]);
 	}
 	
-	public function canEdit(GDO_User $user)
+	public function canEdit(GDO_User $user) : bool
 	{
 		return $user->hasPermission('staff');
 	}
 	
-	public function canDelete(GDO_User $user)
+	public function canDelete(GDO_User $user) : bool
 	{
 		return $user->hasPermission('staff');
 	}
 	
-	public function hrefEdit()
+	public function hrefEdit() : string
 	{
-		return href('Comments', 'Edit', '&id='.$this->getID());
+		return href('Comments', 'Edit', '&comment='.$this->getID());
 	}
 	
-	public function href_edit()
+	public function href_edit() : string
 	{
 		return $this->hrefEdit();
 	}
 	
-	public function urlApprove()
+	public function urlApprove() : string
 	{
-		return url('Comments', 'Approve', '&id='.$this->getID().'&token='.$this->gdoHashcode());
+		return url('Comments', 'Approve', '&comment='.$this->getID().'&token='.$this->gdoHashcode());
 	}
 	
 	public function urlDelete()
 	{
-		return url('Comments', 'Delete', '&id='.$this->getID().'&token='.$this->gdoHashcode());
+		return url('Comments', 'Delete', '&comment='.$this->getID().'&token='.$this->gdoHashcode());
 	}
 	
 }

@@ -16,12 +16,9 @@ use GDO\Captcha\GDT_Captcha;
 
 abstract class Comments_Write extends MethodForm
 {
-	/**
-	 * @return GDO_CommentTable
-	 */
-	public abstract function gdoCommentsTable();
+	public abstract function hrefList() : string;
 
-	public abstract function hrefList();
+	public abstract function gdoCommentsTable() : GDO_CommentTable;
 
 	protected GDO $object;
 	
@@ -65,10 +62,10 @@ abstract class Comments_Write extends MethodForm
 		);
 		$form->actions()->addField(GDT_Submit::make());
 		
-		if (1 === $this->gdoCommentsTable()->gdoMaxComments(GDO_User::current()))
-		{
-			$form->withGDOValuesFrom($this->oldComment);
-		}
+// 		if (1 === $this->gdoCommentsTable()->gdoMaxComments(GDO_User::current()))
+// 		{
+// 			$form->withGDOValuesFrom($this->oldComment);
+// 		}
 	}
 	
 	public function onInit()
@@ -106,18 +103,18 @@ abstract class Comments_Write extends MethodForm
 			$approval = Module_Comments::instance()->cfgApproval();
 			if (!$approval)
 			{
-				$comment->setVars(array(
+				$comment->setVars([
 					'comment_approved' => Time::getDate(),
 					'comment_approver' => GDO_User::system()->getID(),
-				));
+				]);
 			}
 			$comment->insert();
 			
 			# Relation entry
-			$entry = $this->gdoCommentsTable()->blank(array(
+			$entry = $this->gdoCommentsTable()->blank([
 				'comment_object' => $this->object->getID(),
 				'comment_id' => $comment->getID(),
-			));
+			]);
 			$entry->insert();
 			
 			if (Module_Comments::instance()->cfgEmail() || $approval)
@@ -135,6 +132,9 @@ abstract class Comments_Write extends MethodForm
 		$this->successMessage();
 	}
 	
+	##############
+	### E-Mail ###
+	##############
 	private function sendEmail(GDO_Comment $comment)
 	{
 		foreach (GDO_User::staff() as $user)
@@ -145,16 +145,16 @@ abstract class Comments_Write extends MethodForm
 	
 	private function sendEmailTo(GDO_User $user, GDO_Comment $comment)
 	{
-		$mail = new Mail();
+		$mail = Mail::botMail();
 		$mail->setSubject(tusr($user, 'mail_new_comment_title', [sitename()]));
-		$tVars = array(
+		$tVars = [
 			'user' => $user,
 			'comment' => $comment,
 			'href_approve' => $comment->urlApprove(),
 			'href_delete' => $comment->urlDelete(),
-		);
+		];
 		$mail->setBody(GDT_Template::phpUser($user, 'Comments', 'mail/new_comment.php', $tVars));
-		$mail->setSender(GDO_BOT_EMAIL);
 		$mail->sendToUser($user);
 	}
+
 }

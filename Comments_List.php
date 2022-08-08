@@ -31,7 +31,7 @@ abstract class Comments_List extends MethodQueryCards
     	$table->title('list_comments', [$table->countItems]);
     }
         
-	public function showInSitemap() : bool { return false; }
+	public function isShownInSitemap() : bool { return false; }
 	
 	/**
 	 * @return GDO_CommentTable

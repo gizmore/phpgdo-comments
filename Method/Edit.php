@@ -30,7 +30,7 @@ use GDO\UI\GDT_Card;
  */
 class Edit extends MethodForm
 {
-    public function showInSitemap() : bool { return false; }
+    public function isShownInSitemap() : bool { return false; }
     
 	public function gdoParameters() : array
 	{
