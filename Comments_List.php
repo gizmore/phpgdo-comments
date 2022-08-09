@@ -9,6 +9,7 @@ use GDO\Core\GDT_Response;
 use GDO\Session\GDO_Session;
 use GDO\Table\GDT_Table;
 use GDO\Core\Website;
+use GDO\DB\Query;
 
 abstract class Comments_List extends MethodQueryCards
 {
@@ -52,7 +53,7 @@ abstract class Comments_List extends MethodQueryCards
 		$this->object = $this->gdoCommentsTable()->gdoCommentedObjectTable()->find(Common::getRequestString('id'));
 	}
 	
-	public function getQuery()
+	public function getQuery() : Query
 	{
 		$query = $this->gdoTable()->select('comment_id_t.*')->
 		  where("comment_deleted is NULL")->

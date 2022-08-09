@@ -4,6 +4,7 @@ namespace GDO\Comments\Method;
 use GDO\Table\MethodQueryTable;
 use GDO\Comments\GDO_Comment;
 use GDO\Core\GDO;
+use GDO\DB\Query;
 use GDO\UI\GDT_EditButton;
 
 /**
@@ -28,7 +29,7 @@ final class Admin extends MethodQueryTable
 		);
 	}
 	
-	public function getQuery()
+	public function getQuery() : Query
 	{
 		return GDO_Comment::table()->select()->order('comment_created DESC');
 	}
