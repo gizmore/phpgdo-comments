@@ -67,7 +67,7 @@ final class GDO_Comment extends GDO
 	
 // 	public function getMessage() { return $this->gdoVar('comment_message_output');  }
 	public function displayMessage() : string { return $this->gdoVar('comment_message_output');  }
-// 	public function displayMessage() { return $this->gdoColumn('comment_message')->renderCell();  }
+// 	public function displayMessage() { return $this->gdoColumn('comment_message')->renderHTML();  }
 	
 	public function isApproved() : bool { return $this->gdoVar('comment_approved') !== null; }
 	public function isDeleted() : bool { return $this->gdoVar('comment_deleted') !== null; }
