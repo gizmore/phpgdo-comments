@@ -9,12 +9,17 @@ use GDO\UI\GDT_EditButton;
 
 /**
  * @author gizmore
- * @version 7.0.0
+ * @version 7.0.1
  * @since 6.3.0
  */
 final class Admin extends MethodQueryTable
 {
 	public function getPermission() : ?string { return 'staff'; }
+	
+	public function getMethodTitle() : string
+	{
+		return t('perm_admin');
+	}
 	
     public function gdoTable() : GDO
     {
