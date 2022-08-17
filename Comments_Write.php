@@ -13,6 +13,7 @@ use GDO\Mail\Mail;
 use GDO\Core\GDT_Template;
 use GDO\Core\GDT_Hook;
 use GDO\Captcha\GDT_Captcha;
+use GDO\Core\GDT_Object;
 
 abstract class Comments_Write extends MethodForm
 {
@@ -68,9 +69,16 @@ abstract class Comments_Write extends MethodForm
 // 		}
 	}
 	
+	public function gdoParameters() : array
+	{
+		return [
+			GDT_Object::make('id')->table($this->gdoCommentsTable()->gdoCommentedObjectTable())->notNull(),
+		];
+	}
+	
 	public function onInit()
 	{
-		$this->object = $this->gdoCommentsTable()->gdoCommentedObjectTable()->find(Common::getRequestString('id'));
+		$this->object = $this->gdoParameterValue('id');
 		if (1 === $this->gdoCommentsTable()->gdoMaxComments(GDO_User::current()))
 		{
 			$this->oldComment = $this->object->getUserComment();
