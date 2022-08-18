@@ -6,6 +6,7 @@ use GDO\Comments\GDO_Comment;
 use GDO\Core\GDO;
 use GDO\DB\Query;
 use GDO\UI\GDT_EditButton;
+use GDO\Admin\MethodAdmin;
 
 /**
  * @author gizmore
@@ -14,11 +15,19 @@ use GDO\UI\GDT_EditButton;
  */
 final class Admin extends MethodQueryTable
 {
+	use MethodAdmin;
+	
 	public function getPermission() : ?string { return 'staff'; }
 	
 	public function getMethodTitle() : string
 	{
-		return t('perm_admin');
+		$n = $this->getTable()->getResult()->numRows();
+		return t('list_comments', [$n]);
+	}
+	
+	public function getTableTitle()
+	{
+		return $this->getMethodTitle();
 	}
 	
     public function gdoTable() : GDO

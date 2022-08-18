@@ -38,4 +38,6 @@ return [
 	
 	'mt_comments_delete' => 'Delete comment',
 	
+	'mt_comments_edit' => 'Edit comment',
+	
 ];

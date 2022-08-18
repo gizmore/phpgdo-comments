@@ -33,4 +33,6 @@ return [
 	'mt_comments_admin' => 'Administrare commenti',
 	'mt_list_comments' => 'Commenti su %s',
 	'mt_comments_delete' => 'Elimina commento',
+
+	'mt_comments_edit' => 'Commento modifica',
 ];
