@@ -4,11 +4,12 @@ namespace GDO\Comments\Method;
 use GDO\Comments\GDO_Comment;
 use GDO\Core\GDT_Template;
 use GDO\Core\Method;
-use GDO\Core\GDT_String;
 use GDO\User\GDO_User;
 use GDO\Util\Common;
 use GDO\Mail\Mail;
 use GDO\Core\GDT_Hook;
+use GDO\Core\GDT_Object;
+use GDO\Core\GDT_Token;
 
 /**
  * Delete a comment.
@@ -19,22 +20,27 @@ use GDO\Core\GDT_Hook;
  */
 final class Delete extends Method
 {
-	public function gdoParameters() : array
-	{
-		return [
-			GDT_String::make('id')->notNull(),
-		];
-	}
-	
 	public function getMethodTitle() : string
 	{
 		return t('mt_comments_delete');
 	}
 	
+	public function gdoParameters() : array
+	{
+		return [
+			GDT_Object::make('id')->table(GDO_Comment::table())->notNull(),
+			GDT_Token::make('token')->notNull(),
+		];
+	}
+	
+	public function getComment() : GDO_Comment
+	{
+		return $this->gdoParameterValue('id');
+	}
+	
 	public function execute()
 	{
-		$id = $this->gdoParameterVar('id');
-		$comment = GDO_Comment::table()->find($id);
+		$comment = $this->getComment();
 		if ($comment->isDeleted())
 		{
 			return $this->error('err_comment_already_deleted');

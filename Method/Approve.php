@@ -1,6 +1,7 @@
 <?php
 namespace GDO\Comments\Method;
 
+use GDO\Core\GDT_Object;
 use GDO\Core\GDT_Template;
 use GDO\Core\Method;
 use GDO\Comments\GDO_Comment;
@@ -9,27 +10,31 @@ use GDO\Date\Time;
 use GDO\User\GDO_User;
 use GDO\Mail\Mail;
 use GDO\Core\GDT_Hook;
-use GDO\Core\GDT_String;
 
 /**
  * Comment approvement.
  * 
  * @author gizmore
- * @version 7.0.0
+ * @version 7.0.1
  * @since 6.5.0
  */
 final class Approve extends Method
 {
-	public function gdoParameters() : array
-	{
-		return [
-			GDT_String::make('file')->notNull(),
-		];
-	}
-	
 	public function getMethodTitle() : string
 	{
 		return t('mt_comments_admin');
+	}
+	
+	public function gdoParameters() : array
+	{
+		return [
+			GDT_Object::make('id')->table(GDO_Comment::table())->notNull(),
+		];
+	}
+	
+	public function getComment() : GDO_Comment
+	{
+		return $this->gdoParameterValue('id');
 	}
 	
 	public function execute()
@@ -75,4 +80,5 @@ final class Approve extends Method
 		$mail->setBody(GDT_Template::phpUser($user, 'Comments', 'mail/approved_comment.php', $tVars));
 		$mail->sendToUser($user);
 	}
+	
 }
