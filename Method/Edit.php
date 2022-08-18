@@ -98,6 +98,7 @@ class Edit extends MethodForm
 	
 	public function createForm(GDT_Form $form) : void
 	{
+		$this->comment = $this->getComment();
 		$form->addFields(
 			$this->comment->gdoColumn('comment_message'),
 			$this->comment->gdoColumn('comment_file'),
@@ -112,7 +113,7 @@ class Edit extends MethodForm
 		{
 			$form->actions()->addField(GDT_Submit::make('approve')->onclick([$this, 'onApprove']));
 		}
-		$form->withGDOValuesFrom($this->comment);
+// 		$form->withGDOValuesFrom($this->comment);
 	}
 	
 	public function formValidated(GDT_Form $form)
