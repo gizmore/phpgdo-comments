@@ -27,6 +27,11 @@ final class Approve extends Method
 		];
 	}
 	
+	public function getMethodTitle() : string
+	{
+		return t('mt_comments_admin');
+	}
+	
 	public function execute()
 	{
 		$comment = GDO_Comment::table()->find(Common::getRequestString('id'));

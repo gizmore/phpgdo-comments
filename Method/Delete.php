@@ -14,7 +14,7 @@ use GDO\Core\GDT_Hook;
  * Delete a comment.
  * 
  * @author gizmore
- * @version 7.0.0
+ * @version 7.0.1
  * @since 6.9.0
  */
 final class Delete extends Method
@@ -26,9 +26,15 @@ final class Delete extends Method
 		];
 	}
 	
+	public function getMethodTitle() : string
+	{
+		return t('mt_comments_delete');
+	}
+	
 	public function execute()
 	{
-		$comment = GDO_Comment::table()->find(Common::getRequestString('id'));
+		$id = $this->gdoParameterVar('id');
+		$comment = GDO_Comment::table()->find($id);
 		if ($comment->isDeleted())
 		{
 			return $this->error('err_comment_already_deleted');

@@ -8,21 +8,20 @@ use GDO\Form\GDT_Form;
 use GDO\Form\GDT_Submit;
 use GDO\Form\MethodForm;
 use GDO\User\GDO_User;
-use GDO\Util\Common;
-use GDO\Core\GDT_String;
 use GDO\Date\Time;
 use GDO\Core\Website;
 use GDO\UI\GDT_Redirect;
 use GDO\Core\GDT_Response;
 use GDO\UI\GDT_DeleteButton;
 use GDO\UI\GDT_Page;
-use GDO\UI\GDT_Card;
+use GDO\Core\GDT_Object;
 
 /**
  * Edit a comment.
  * 
  * @author gizmore
- * @version 7.0.0
+ * @version 7.0.1
+ * @since 6.4.0
  * @see Comments_List
  * @see Comments_Write
  * @see GDT_Message
@@ -35,8 +34,13 @@ class Edit extends MethodForm
 	public function gdoParameters() : array
 	{
 		return [
-			GDT_String::make('id')->notNull(),
+			GDT_Object::make('id')->notNull()->table(GDO_Comment::table()),
 		];
+	}
+	
+	public function getComment() : GDO_Comment
+	{
+		return $this->gdoParameterValue('id');
 	}
 	
 	public function execute()
@@ -64,7 +68,7 @@ class Edit extends MethodForm
 	public function onInit()
 	{
 		$user = GDO_User::current();
-		$this->comment = GDO_Comment::table()->find(Common::getRequestString('id'));
+		$this->comment = $this->getComment();
 		if ($this->comment->isDeleted())
 		{
 		    throw new GDO_Error('err_is_deleted');
@@ -95,7 +99,6 @@ class Edit extends MethodForm
 	public function createForm(GDT_Form $form) : void
 	{
 		$form->addFields(
-// 			$this->comment->gdoColumn('comment_title'),
 			$this->comment->gdoColumn('comment_message'),
 			$this->comment->gdoColumn('comment_file'),
 			$this->comment->gdoColumn('comment_top'),
@@ -103,14 +106,12 @@ class Edit extends MethodForm
 		);
 		$form->actions()->addFields(
 			GDT_Submit::make(),
-			GDT_DeleteButton::make(),
+			GDT_DeleteButton::make()->onclick([$this, 'onDelete']),
 		);
-		
 		if (!$this->comment->isApproved())
 		{
-			$form->actions()->addField(GDT_Submit::make('approve'));
+			$form->actions()->addField(GDT_Submit::make('approve')->onclick([$this, 'onApprove']));
 		}
-		
 		$form->withGDOValuesFrom($this->comment);
 	}
 	
@@ -120,7 +121,7 @@ class Edit extends MethodForm
 		return $this->message('msg_comment_edited')->addField($this->renderPage());
 	}
 	
-	public function onSubmit_delete(GDT_Form $form)
+	public function onDelete(GDT_Form $form)
 	{
 		if ($file = $this->comment->getFile())
 		{
@@ -135,7 +136,7 @@ class Edit extends MethodForm
 		return Website::hrefBack();
 	}
 	
-	public function onSubmit_approve(GDT_Form $form)
+	public function onApprove(GDT_Form $form)
 	{
 		if ($this->comment->isApproved())
 		{

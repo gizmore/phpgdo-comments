@@ -21,6 +21,11 @@ final class Attachment extends Method
 		];
 	}
 	
+	public function getMethodTitle() : string
+	{
+		return t('attachment');
+	}
+	
 	public function execute()
 	{
 		return GetFile::make()->execute();
