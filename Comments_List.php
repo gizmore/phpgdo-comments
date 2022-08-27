@@ -15,6 +15,8 @@ abstract class Comments_List extends MethodQueryCards
 {
     const LAST_LIST_KEY = 'comments_list_last';
     
+    public function isTrivial() : bool { return false; }
+    
     public function setLastList()
     {
         GDO_Session::set(self::LAST_LIST_KEY, urldecode($_SERVER['REQUEST_URI']));
