@@ -13,7 +13,16 @@ use GDO\Core\GDT_Template;
 use GDO\Core\GDT_Hook;
 use GDO\Captcha\GDT_Captcha;
 use GDO\Core\GDT_Object;
+use GDO\UI\GDT_HTML;
+use GDO\Core\GDT_Tuple;
 
+/**
+ * Abstract comment writing. @TODO: Rename to MethodCommentWrite
+ * 
+ * @author gizmore
+ * @version 7.0.1
+ * @since 6.3.0
+ */
 abstract class Comments_Write extends MethodForm
 {
 	public abstract function hrefList() : string;
@@ -86,8 +95,10 @@ abstract class Comments_Write extends MethodForm
 	
 	public function execute()
 	{
+		$card = $this->object->renderCard();
+		$card = GDT_HTML::make()->var($card);
 		$response = parent::execute();
-		return $this->object->responseCard()->addField($response);
+		return GDT_Tuple::makeWith($card, $response);
 	}
 	
 	public function successMessage()

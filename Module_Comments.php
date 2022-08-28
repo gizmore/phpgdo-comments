@@ -9,7 +9,7 @@ use GDO\User\GDO_User;
  * Abstract comments. Reused in news, forum, helpdesk etc.
  * 
  * @author gizmore
- * @version 7.0.0
+ * @version 7.0.1
  * @since 5.0.0
  */
 final class Module_Comments extends GDO_Module
@@ -18,11 +18,23 @@ final class Module_Comments extends GDO_Module
 	### Module ###
 	##############
 	public int $priority = 80;
-	public function getDependencies() : array { return ['Votes', 'File']; }
-	public function getClasses() : array { return [GDO_Comment::class, GDO_CommentLike::class]; }
+	
 	public function onLoadLanguage() : void { $this->loadLanguage('lang/comments'); }
 	public function href_administrate_module() : ?string  { return href('Comments', 'Admin'); }
 	
+	public function getClasses() : array
+	{
+		return [
+			GDO_Comment::class,
+			GDO_CommentLike::class,
+		];
+	}
+
+	public function getDependencies() : array
+	{
+		return ['Votes', 'File'];
+	}
+
 	##############
 	### Config ###
 	##############
