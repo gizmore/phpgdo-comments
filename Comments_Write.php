@@ -110,7 +110,7 @@ abstract class Comments_Write extends MethodForm
 	
 	public function formValidated(GDT_Form $form)
 	{
-		if ($this->oldComment)
+		if (isset($this->oldComment))
 		{
 			$this->oldComment->saveVars($form->getFormVars());
 		}
