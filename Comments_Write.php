@@ -48,10 +48,16 @@ abstract class Comments_Write extends MethodForm
 		return Module_Comments::instance()->cfgCaptcha();
 	}
 	
+	public function gdoParameters() : array
+	{
+		return [
+			GDT_Object::make('id')->table($this->gdoCommentsTable()->gdoCommentedObjectTable())->notNull(),
+		];
+	}
+	
 	public function createForm(GDT_Form $form) : void
 	{
 		$gdo = GDO_Comment::table();
-// 		$form->addField($gdo->gdoColumn('comment_title'));
 		$form->addField($gdo->gdoColumn('comment_message'));
 		if ($this->gdoCommentsTable()->gdoAllowFiles())
 		{
@@ -65,29 +71,16 @@ abstract class Comments_Write extends MethodForm
 				$form->addField(GDT_Captcha::make());
 			}
 		}
-		
 		$form->addFields(
 			GDT_AntiCSRF::make(),
 		);
 		$form->actions()->addField(GDT_Submit::make());
-		
-// 		if (1 === $this->gdoCommentsTable()->gdoMaxComments(GDO_User::current()))
-// 		{
-// 			$form->withGDOValuesFrom($this->oldComment);
-// 		}
-	}
-	
-	public function gdoParameters() : array
-	{
-		return [
-			GDT_Object::make('id')->table($this->gdoCommentsTable()->gdoCommentedObjectTable())->notNull(),
-		];
 	}
 	
 	public function onInit()
 	{
 		$this->object = $this->gdoParameterValue('id');
-		if (1 === $this->gdoCommentsTable()->gdoMaxComments(GDO_User::current()))
+		if ($this->gdoCommentsTable()->gdoMaxComments(GDO_User::current()) <= 1)
 		{
 			$this->oldComment = $this->object->getUserComment();
 		}
@@ -109,8 +102,8 @@ abstract class Comments_Write extends MethodForm
 	public function successMessage()
 	{
 	    return Module_Comments::instance()->cfgApproval() ? 
-	    $this->redirectMessage('msg_comment_added_approval', null, $this->hrefList()) :
-	    $this->redirectMessage('msg_comment_added', null, $this->hrefList());
+		    $this->redirectMessage('msg_comment_added_approval', null, $this->hrefList()) :
+		    $this->redirectMessage('msg_comment_added', null, $this->hrefList());
 	}
 	
 	public function formValidated(GDT_Form $form)

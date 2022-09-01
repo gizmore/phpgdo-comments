@@ -71,7 +71,7 @@ class Edit extends MethodForm
 // 		}
 		if (!$this->comment->canEdit($user))
 		{
-			throw new GDO_Error('err_no_permission');
+			throw new GDO_Error('err_permission_required');
 		}
 	}
 	

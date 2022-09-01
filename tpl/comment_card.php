@@ -1,22 +1,24 @@
 <?php
-use GDO\Comments\GDO_Comment;
+namespace GDO\Comments\tpl;
+
 use GDO\UI\GDT_EditButton;
 use GDO\User\GDO_User;
 use GDO\UI\GDT_Card;
 use GDO\UI\GDT_HTML;
 
-/** @var $gdo GDO_Comment **/
+/** @var $gdo \GDO\Comments\GDO_Comment **/
+
 $user = GDO_User::current();
 
 $card = GDT_Card::make()->gdo($gdo);
 $card->creatorHeader();
-$card->addFields(
-	GDT_HTML::make('comment_message')->html($gdo->displayMessage()),
+$card->addField(
+	GDT_HTML::make('comment_message')->var($gdo->displayMessage()),
 );
 
 if ($gdo->hasFile())
 {
-	$card->addFields(
+	$card->addField(
 		$gdo->gdoColumn('comment_file'),
 	);
 }

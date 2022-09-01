@@ -6,7 +6,8 @@ use GDO\Core\GDT_Checkbox;
 use GDO\User\GDO_User;
 
 /**
- * Abstract comments. Reused in news, forum, helpdesk etc.
+ * Abstract comments.
+ * Reused in news, forum, helpdesk etc.
  * 
  * @author gizmore
  * @version 7.0.1
@@ -33,6 +34,11 @@ final class Module_Comments extends GDO_Module
 	public function getDependencies() : array
 	{
 		return ['Votes', 'File'];
+	}
+	
+	public function getFriendencies() : array
+	{
+		return ['Mail'];
 	}
 
 	##############
