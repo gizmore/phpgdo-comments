@@ -5,11 +5,11 @@ use GDO\Core\GDT_Object;
 use GDO\Core\GDT_Template;
 use GDO\Core\Method;
 use GDO\Comments\GDO_Comment;
-use GDO\Util\Common;
 use GDO\Date\Time;
 use GDO\User\GDO_User;
 use GDO\Mail\Mail;
 use GDO\Core\GDT_Hook;
+use GDO\Core\GDT_Token;
 
 /**
  * Comment approvement.
@@ -29,6 +29,7 @@ final class Approve extends Method
 	{
 		return [
 			GDT_Object::make('id')->table(GDO_Comment::table())->notNull(),
+			GDT_Token::make('token')->notNull(),
 		];
 	}
 	
@@ -37,18 +38,22 @@ final class Approve extends Method
 		return $this->gdoParameterValue('id');
 	}
 	
+	public function getToken() : string
+	{
+		return $this->gdoParameterVar('token');
+	}
+	
 	public function execute()
 	{
-		$comment = GDO_Comment::table()->find(Common::getRequestString('id'));
+		$comment = $this->getComment();
 		if ($comment->isApproved())
 		{
 			return $this->error('err_comment_already_approved');
 		}
-		if ($comment->gdoHashcode() !== Common::getRequestString('token'))
+		if ($comment->gdoHashcode() !== $this->getToken())
 		{
 			return $this->error('err_token');
 		}
-		
 		$comment->saveVars([
 			'comment_approved' => Time::getDate(),
 			'comment_approvor' => GDO_User::current()->getID(),

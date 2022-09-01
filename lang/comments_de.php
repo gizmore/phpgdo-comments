@@ -34,7 +34,8 @@ return [
 	'mt_comments_admin' => 'Kommentare administrieren',
 	'mt_list_comments' => 'Kommentare auf %s',
 	'mt_comments_delete' => 'Kommentar löschen',
-
+	'msg_comment_deleted' => 'Der Kommentar wurde als gelöscht markiert.',
+	
 	'mt_comments_edit' => 'Kommentar bearbeiten',
 	
 ];

@@ -37,6 +37,7 @@ return [
 	'mt_list_comments' => 'Comments on %s',
 	
 	'mt_comments_delete' => 'Delete comment',
+	'msg_comment_deleted' => 'The comment has been marked as deleted.',
 	
 	'mt_comments_edit' => 'Edit comment',
 	

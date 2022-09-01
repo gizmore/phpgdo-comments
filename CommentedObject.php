@@ -73,7 +73,7 @@ trait CommentedObject
 	{
 		$commentTable = $this->gdoCommentTable();
 		$commentTable instanceof GDO_CommentTable;
-		$query = $commentTable->select('gdo_comment.*')->
+		$query = $commentTable->select('comment_id_t.*')->
 			fetchTable(GDO_Comment::table())->
 			joinObject('comment_id')->
 			where("comment_object=".$this->getID());
@@ -92,10 +92,8 @@ trait CommentedObject
 	
 	/**
 	 * Build query for a single comment for a given user.
-	 * @param GDO_User $user
-	 * @return Query
 	 */
-	public function queryUserComments(GDO_User $user=null)
+	public function queryUserComments(GDO_User $user=null) : Query
 	{
 		$user = $user ? $user : GDO_User::current();
 		return $this->queryComments()->where("comment_creator={$user->getID()}");
@@ -103,10 +101,8 @@ trait CommentedObject
 	
 	/**
 	 * In case you only allow one comment per user and object, this gets the comment for a user and object
-	 * @param GDO_User $user
-	 * @return GDO_Comment
 	 */
-	public function getUserComment(GDO_User $user=null)
+	public function getUserComment(GDO_User $user=null) : ?GDO_Comment
 	{
 		return $this->queryUserComments($user)->first()->exec()->fetchObject();
 	}

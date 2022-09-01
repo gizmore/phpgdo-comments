@@ -31,7 +31,7 @@ abstract class Comments_Write extends MethodForm
 
 	protected GDO $object;
 	
-	protected GDO_Comment $oldComment;
+	protected ?GDO_Comment $oldComment;
 	
 	public function hasPermission(GDO_User $user) : bool
 	{
@@ -97,8 +97,13 @@ abstract class Comments_Write extends MethodForm
 	{
 		$card = $this->object->renderCard();
 		$card = GDT_HTML::make()->var($card);
-		$response = parent::execute();
-		return GDT_Tuple::makeWith($card, $response);
+		$result = parent::execute();
+		$response = GDT_Tuple::makeWith($card);
+		if ($result)
+		{
+			$response->addField($result);
+		}
+		return $response;
 	}
 	
 	public function successMessage()

@@ -33,6 +33,7 @@ return [
 	'mt_comments_admin' => 'Administrare commenti',
 	'mt_list_comments' => 'Commenti su %s',
 	'mt_comments_delete' => 'Elimina commento',
-
+	'msg_comment_deleted' => 'Ua fa\'ailogaina le fa\'amatalaga ua tapeina.',
+	
 	'mt_comments_edit' => 'Commento modifica',
 ];

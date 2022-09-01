@@ -28,7 +28,8 @@ final class Attachment extends Method
 	
 	public function execute()
 	{
-		return GetFile::make()->execute();
+		$id = $this->gdoParameterVar('id');
+		return GetFile::make()->executeWithId($id);
 	}
 
 }
