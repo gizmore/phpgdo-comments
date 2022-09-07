@@ -66,6 +66,7 @@ final class GDO_Comment extends GDO
 	public function getCreateDate() : string { return $this->gdoVar('comment_created'); }
 	
 // 	public function getMessage() { return $this->gdoVar('comment_message_output');  }
+	public function displayInput() : string { return $this->gdoVar('comment_message_input');  }
 	public function displayMessage() : string { return $this->gdoVar('comment_message_output');  }
 // 	public function displayMessage() { return $this->gdoColumn('comment_message')->renderHTML();  }
 	
