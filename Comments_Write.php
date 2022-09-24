@@ -77,7 +77,7 @@ abstract class Comments_Write extends MethodForm
 		$form->actions()->addField(GDT_Submit::make());
 	}
 	
-	public function onInit()
+	public function onMethodInit()
 	{
 		$this->object = $this->gdoParameterValue('id');
 		if ($this->gdoCommentsTable()->gdoMaxComments(GDO_User::current()) <= 1)

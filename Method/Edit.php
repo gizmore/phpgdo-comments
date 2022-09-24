@@ -61,7 +61,7 @@ class Edit extends MethodForm
 	    
 // 	}
 	
-	public function onInit()
+	public function onMethodInit()
 	{
 		$user = GDO_User::current();
 		$this->comment = $this->getComment();

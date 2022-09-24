@@ -77,9 +77,9 @@ abstract class Comments_List extends MethodQueryCards
 		];
 	}
 
-	public function onInit()
+	public function onMethodInit()
 	{
-		parent::onInit();
+		parent::onMethodInit();
 		$this->object = $this->gdoParameterValue('id');
 	}
 
