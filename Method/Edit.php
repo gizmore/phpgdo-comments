@@ -32,13 +32,13 @@ class Edit extends MethodForm
 	public function gdoParameters() : array
 	{
 		return [
-			GDT_Object::make('id')->notNull()->table(GDO_Comment::table()),
+			GDT_Object::make('comment')->notNull()->table(GDO_Comment::table()),
 		];
 	}
 	
 	public function getComment() : GDO_Comment
 	{
-		return $this->gdoParameterValue('id');
+		return $this->gdoParameterValue('comment');
 	}
 	
 // 	public function execute()

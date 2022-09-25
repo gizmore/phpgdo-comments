@@ -73,13 +73,12 @@ abstract class Comments_List extends MethodQueryCards
 	{
 		$table = $this->gdoCommentsTable()->gdoCommentedObjectTable();
 		return [
-			GDT_Object::make()->table($table)->notNull(),
+			GDT_Object::make('id')->table($table)->notNull(),
 		];
 	}
 
 	public function onMethodInit()
 	{
-		parent::onMethodInit();
 		$this->object = $this->gdoParameterValue('id');
 	}
 
@@ -90,10 +89,14 @@ abstract class Comments_List extends MethodQueryCards
 			->joinObject('comment_id')
 			->where("comment_deleted is NULL")
 			->where("comment_object=" . $this->object->getID());
-		$query->where("comment_approved IS NOT NULL");
-		return $query->fetchTable(GDO_Comment::table());
+		return $query->where("comment_approved IS NOT NULL")->fetchTable($this->gdoFetchAs());
 	}
 
+	public function gdoFetchAs()
+	{
+		return GDO_Comment::table();
+	}
+	
 	public function execute()
 	{
 		$card = GDT_HTML::make()->var($this->object->renderCard());
