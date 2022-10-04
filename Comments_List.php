@@ -108,7 +108,7 @@ abstract class Comments_List extends MethodQueryCards
 	{
 		$count = $this->object->getCommentCount();
 		$list->title('list_comments', [
-			$this->object->displayName(),
+			$this->object->renderName(),
 			$count
 		]);
 	}
