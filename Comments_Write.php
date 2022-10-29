@@ -33,6 +33,11 @@ abstract class Comments_Write extends MethodForm
 	
 	protected ?GDO_Comment $oldComment;
 	
+	public function isTrivial(): bool
+	{
+		return false;
+	}
+	
 	public function hasPermission(GDO_User $user) : bool
 	{
 		return $this->gdoCommentsTable()->canAddComment($user);
