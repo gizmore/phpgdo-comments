@@ -16,7 +16,7 @@ use GDO\Core\GDT_Object;
  * Edit a comment.
  * 
  * @author gizmore
- * @version 7.0.1
+ * @version 7.0.2
  * @since 6.4.0
  * @see Comments_List
  * @see Comments_Write
@@ -41,57 +41,16 @@ class Edit extends MethodForm
 		return $this->gdoParameterValue('comment');
 	}
 	
-// 	public function execute()
-// 	{
-// 	    if (isset($_REQUEST['delete']))
-// 	    {
-// 	        if ($this->comment->canEdit(GDO_User::current()))
-// 	        {
-// 	            $this->comment->delete();
-//     	        return
-//         	        $this->message('msg_crud_deleted', [$this->comment->gdoHumanName()])->
-//         	        addField($this->redirectToList());
-// 	        }
-// 	    }
-// 	    return parent::execute();
-// 	}
-	
-// 	private function redirectToList()
-// 	{
-	    
-// 	}
-	
 	public function onMethodInit()
 	{
 		$user = GDO_User::current();
 		$this->comment = $this->getComment();
-// 		if ($this->comment->isDeleted())
-// 		{
-// 		    throw new GDO_Error('err_is_deleted');
-// 		}
 		if (!$this->comment->canEdit($user))
 		{
 			throw new GDO_Error('err_permission_required');
 		}
 	}
-	
-// 	/**
-// 	 * After execution we show the card again,
-// 	 * unless the comment got deleted, then we redirect back.
-// 	 */
-// 	public function afterExecute() : void
-// 	{
-// 		$response = GDT_Page::$INSTANCE->topResponse();
-// 	    if (!$this->comment->isDeleted())
-// 	    {
-// 	    	$response->addField($this->comment);
-// 	    }
-// 	    else
-// 	    {
-// 	        $response->addField($this->redirectBack());
-// 	    }
-// 	}
-	
+
 	public function createForm(GDT_Form $form) : void
 	{
 		$this->comment = $this->getComment();
@@ -119,10 +78,6 @@ class Edit extends MethodForm
 	
 	public function onDelete(GDT_Form $form)
 	{
-// 		if ($file = $this->comment->getFile())
-// 		{
-// 			$file->delete();
-// 		}
 		$this->comment->markDeleted();
 		return $this->redirectMessage('msg_comment_deleted');
 	}
