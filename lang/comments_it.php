@@ -1,11 +1,12 @@
 <?php
 namespace GDO\Comments\lang;
+
 return [
 	'gdo_comment' => 'Commento',
 	'link_comments' => '%s commenti',
 	'btn_write_comment' => 'Schrivi&nbsp;Commento',
-	'commented_at' =>'forma %s commenti',
-	'comment_top' =>'Commento Top?',
+	'commented_at' => 'forma %s commenti',
+	'comment_top' => 'Commento Top?',
 	'comment_approved' => 'Accettato',
 	'comment_approver' => 'Accettato da',
 	###########
@@ -29,11 +30,11 @@ return [
 	'cfg_comment_approval_member' => 'Email approval for members?',
 	'cfg_comment_captcha_guest' => 'Captcha for guests?',
 	'cfg_comment_captcha_member' => 'Captcha for members?',
-	
+
 	'mt_comments_admin' => 'Administrare commenti',
 	'mt_list_comments' => 'Commenti su %s',
 	'mt_comments_delete' => 'Elimina commento',
 	'msg_comment_deleted' => 'Ua fa\'ailogaina le fa\'amatalaga ua tapeina.',
-	
+
 	'mt_comments_edit' => 'Commento modifica',
 ];

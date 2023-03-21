@@ -2,28 +2,52 @@
 namespace GDO\Comments;
 
 use GDO\Core\GDO;
-use GDO\Table\MethodQueryCards;
-use GDO\Table\GDT_List;
-use GDO\Session\GDO_Session;
-use GDO\Table\GDT_Table;
+use GDO\Core\GDT_Object;
+use GDO\Core\GDT_Tuple;
 use GDO\Core\Website;
 use GDO\DB\Query;
+use GDO\Session\GDO_Session;
+use GDO\Table\GDT_List;
+use GDO\Table\GDT_Table;
+use GDO\Table\MethodQueryCards;
 use GDO\UI\GDT_HTML;
-use GDO\Core\GDT_Tuple;
-use GDO\Core\GDT_Object;
 
 /**
  * Abstract list of comments.
  *
- * @author gizmore
  * @version 7.0.1
  * @since 6.3.0
+ * @author gizmore
  */
 abstract class Comments_List extends MethodQueryCards
 {
-	const LAST_LIST_KEY = 'comments_list_last';
+
+	public const LAST_LIST_KEY = 'comments_list_last';
+	protected ?GDO $object;
 
 	public function isTrivial(): bool
+	{
+		return false;
+	}
+
+	public function setupTitle(GDT_Table $table)
+	{
+		$gdoName = $this->gdoCommentsTable()->gdoHumanName();
+		Website::setTitle(t('mt_list_comments', [
+			$gdoName,
+		]));
+		$table->title('list_comments', [
+			$table->countItems,
+		]);
+	}
+
+	/**
+	 *
+	 * @return GDO_CommentTable
+	 */
+	abstract public function gdoCommentsTable();
+
+	public function isShownInSitemap(): bool
 	{
 		return false;
 	}
@@ -38,38 +62,24 @@ abstract class Comments_List extends MethodQueryCards
 		return GDO_Session::set(self::LAST_LIST_KEY);
 	}
 
-	public function setupTitle(GDT_Table $table)
+	abstract public function hrefAdd();
+
+	public function gdoDecorateList(GDT_List $list)
 	{
-		$gdoName = $this->gdoCommentsTable()->gdoHumanName();
-		Website::setTitle(t('mt_list_comments', [
-			$gdoName
-		]));
-		$table->title('list_comments', [
-			$table->countItems
+		$count = $this->object->getCommentCount();
+		$list->title('list_comments', [
+			$this->object->renderName(),
+			$count,
 		]);
-	}
-
-	public function isShownInSitemap(): bool
-	{
-		return false;
-	}
-
-	/**
-	 *
-	 * @return GDO_CommentTable
-	 */
-	public abstract function gdoCommentsTable();
-
-	public function gdoTable(): GDO
+	}	public function gdoTable(): GDO
 	{
 		return $this->gdoCommentsTable();
 	}
 
-	public abstract function hrefAdd();
 
-	protected ?GDO $object;
-	
-	public function gdoParameters() : array
+
+
+	public function gdoParameters(): array
 	{
 		$table = $this->gdoCommentsTable()->gdoCommentedObjectTable();
 		return [
@@ -87,16 +97,16 @@ abstract class Comments_List extends MethodQueryCards
 		$query = $this->gdoTable()
 			->select('comment_id_t.*')
 			->joinObject('comment_id')
-			->where("comment_deleted is NULL")
-			->where("comment_object=" . $this->object->getID());
-		return $query->where("comment_approved IS NOT NULL")->fetchTable($this->gdoFetchAs());
+			->where('comment_deleted is NULL')
+			->where('comment_object=' . $this->object->getID());
+		return $query->where('comment_approved IS NOT NULL')->fetchTable($this->gdoFetchAs());
 	}
 
 	public function gdoFetchAs()
 	{
 		return GDO_Comment::table();
 	}
-	
+
 	public function execute()
 	{
 		$card = GDT_HTML::make()->var($this->object->renderCard());
@@ -104,13 +114,5 @@ abstract class Comments_List extends MethodQueryCards
 		return GDT_Tuple::makeWith($card, $resp);
 	}
 
-	public function gdoDecorateList(GDT_List $list)
-	{
-		$count = $this->object->getCommentCount();
-		$list->title('list_comments', [
-			$this->object->renderName(),
-			$count
-		]);
-	}
 
 }

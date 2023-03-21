@@ -2,30 +2,31 @@
 namespace GDO\Comments\Method;
 
 use GDO\Core\Method;
-use GDO\File\Method\GetFile;
 use GDO\File\GDT_File;
+use GDO\File\Method\GetFile;
 
 /**
  * Comment attachment download.
- * 
- * @author gizmore
+ *
  * @version 7.0.1
  * @since 6.5.0
+ * @author gizmore
  */
 final class Attachment extends Method
 {
-	public function gdoParameters() : array
+
+	public function gdoParameters(): array
 	{
 		return [
 			GDT_File::make('id')->notNull(),
 		];
 	}
-	
-	public function getMethodTitle() : string
+
+	public function getMethodTitle(): string
 	{
 		return t('attachment');
 	}
-	
+
 	public function execute()
 	{
 		$id = $this->gdoParameterVar('id');

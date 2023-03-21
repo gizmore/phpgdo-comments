@@ -30,12 +30,12 @@ return [
 	'cfg_comment_approval_member' => 'Email approval for members?',
 	'cfg_comment_captcha_guest' => 'Captcha for guests?',
 	'cfg_comment_captcha_member' => 'Captcha for members?',
-	
+
 	'mt_comments_admin' => 'Kommentare administrieren',
 	'mt_list_comments' => 'Kommentare auf %s',
 	'mt_comments_delete' => 'Kommentar löschen',
 	'msg_comment_deleted' => 'Der Kommentar wurde als gelöscht markiert.',
-	
+
 	'mt_comments_edit' => 'Kommentar bearbeiten',
-	
+
 ];

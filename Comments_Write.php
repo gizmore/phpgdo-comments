@@ -1,66 +1,54 @@
 <?php
 namespace GDO\Comments;
 
+use GDO\Captcha\GDT_Captcha;
 use GDO\Core\GDO;
+use GDO\Core\GDT_Hook;
+use GDO\Core\GDT_Object;
+use GDO\Core\GDT_Template;
+use GDO\Core\GDT_Tuple;
+use GDO\Date\Time;
 use GDO\Form\GDT_AntiCSRF;
 use GDO\Form\GDT_Form;
 use GDO\Form\GDT_Submit;
 use GDO\Form\MethodForm;
-use GDO\User\GDO_User;
-use GDO\Date\Time;
 use GDO\Mail\Mail;
-use GDO\Core\GDT_Template;
-use GDO\Core\GDT_Hook;
-use GDO\Captcha\GDT_Captcha;
-use GDO\Core\GDT_Object;
 use GDO\UI\GDT_HTML;
-use GDO\Core\GDT_Tuple;
+use GDO\User\GDO_User;
 
 /**
  * Abstract comment writing. @TODO: Rename to MethodCommentWrite
- * 
- * @author gizmore
+ *
  * @version 7.0.1
  * @since 6.3.0
+ * @author gizmore
  */
 abstract class Comments_Write extends MethodForm
 {
-	public abstract function hrefList() : string;
-
-	public abstract function gdoCommentsTable() : GDO_CommentTable;
 
 	protected GDO $object;
-	
 	protected ?GDO_Comment $oldComment;
-	
+
 	public function isTrivial(): bool
 	{
 		return false;
 	}
-	
-	public function hasPermission(GDO_User $user) : bool
+
+	public function hasPermission(GDO_User $user): bool
 	{
 		return $this->gdoCommentsTable()->canAddComment($user);
 	}
 
-	public function isApprovalRequired()
-	{
-		return Module_Comments::instance()->cfgApproval();
-	}
-	
-	public function isCaptchaRequired()
-	{
-		return Module_Comments::instance()->cfgCaptcha();
-	}
-	
-	public function gdoParameters() : array
+	abstract public function gdoCommentsTable(): GDO_CommentTable;
+
+	public function gdoParameters(): array
 	{
 		return [
 			GDT_Object::make('id')->table($this->gdoCommentsTable()->gdoCommentedObjectTable())->notNull(),
 		];
 	}
-	
-	public function createForm(GDT_Form $form) : void
+
+	public function createForm(GDT_Form $form): void
 	{
 		$gdo = GDO_Comment::table();
 		$form->addField($gdo->gdoColumn('comment_message'));
@@ -68,7 +56,7 @@ abstract class Comments_Write extends MethodForm
 		{
 			$form->addField($gdo->gdoColumn('comment_file'));
 		}
-		
+
 		if ($this->isCaptchaRequired())
 		{
 			if (module_enabled('Captcha'))
@@ -81,7 +69,12 @@ abstract class Comments_Write extends MethodForm
 		);
 		$form->actions()->addField(GDT_Submit::make());
 	}
-	
+
+	public function isCaptchaRequired()
+	{
+		return Module_Comments::instance()->cfgCaptcha();
+	}
+
 	public function onMethodInit()
 	{
 		$this->object = $this->gdoParameterValue('id');
@@ -90,7 +83,7 @@ abstract class Comments_Write extends MethodForm
 			$this->oldComment = $this->object->getUserComment();
 		}
 	}
-	
+
 	public function execute()
 	{
 		$card = $this->object->renderCard();
@@ -103,14 +96,7 @@ abstract class Comments_Write extends MethodForm
 		}
 		return $response;
 	}
-	
-	public function successMessage()
-	{
-	    return Module_Comments::instance()->cfgApproval() ? 
-		    $this->redirectMessage('msg_comment_added_approval', null, $this->hrefList()) :
-		    $this->redirectMessage('msg_comment_added', null, $this->hrefList());
-	}
-	
+
 	public function formValidated(GDT_Form $form)
 	{
 		if (isset($this->oldComment))
@@ -130,32 +116,29 @@ abstract class Comments_Write extends MethodForm
 				]);
 			}
 			$comment->insert();
-			
+
 			# Relation entry
 			$entry = $this->gdoCommentsTable()->blank([
 				'comment_object' => $this->object->getID(),
 				'comment_id' => $comment->getID(),
 			]);
 			$entry->insert();
-			
+
 			if (Module_Comments::instance()->cfgEmail() || $approval)
 			{
 				$this->sendEmail($comment);
 			}
-			
+
 			GDT_Hook::callWithIPC('CommentAdded', $comment);
 			if (!$approval)
 			{
 				GDT_Hook::callWithIPC('CommentApproved', $comment);
 			}
 		}
-		
+
 		$this->successMessage();
 	}
-	
-	##############
-	### E-Mail ###
-	##############
+
 	private function sendEmail(GDO_Comment $comment)
 	{
 		foreach (GDO_User::staff() as $user)
@@ -163,7 +146,7 @@ abstract class Comments_Write extends MethodForm
 			$this->sendEmailTo($user, $comment);
 		}
 	}
-	
+
 	private function sendEmailTo(GDO_User $user, GDO_Comment $comment)
 	{
 		$mail = Mail::botMail();
@@ -176,6 +159,24 @@ abstract class Comments_Write extends MethodForm
 		];
 		$mail->setBody(GDT_Template::phpUser($user, 'Comments', 'mail/new_comment.php', $tVars));
 		$mail->sendToUser($user);
+	}
+
+	public function successMessage()
+	{
+		return Module_Comments::instance()->cfgApproval() ?
+			$this->redirectMessage('msg_comment_added_approval', null, $this->hrefList()) :
+			$this->redirectMessage('msg_comment_added', null, $this->hrefList());
+	}
+
+	##############
+	### E-Mail ###
+	##############
+
+	abstract public function hrefList(): string;
+
+	public function isApprovalRequired()
+	{
+		return Module_Comments::instance()->cfgApproval();
 	}
 
 }

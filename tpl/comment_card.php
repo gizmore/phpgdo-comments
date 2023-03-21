@@ -1,12 +1,13 @@
 <?php
 namespace GDO\Comments\tpl;
 
-use GDO\UI\GDT_EditButton;
-use GDO\User\GDO_User;
+use GDO\Comments\GDO_Comment;
 use GDO\UI\GDT_Card;
+use GDO\UI\GDT_EditButton;
 use GDO\UI\GDT_HTML;
+use GDO\User\GDO_User;
 
-/** @var $gdo \GDO\Comments\GDO_Comment **/
+/** @var $gdo GDO_Comment * */
 
 $user = GDO_User::current();
 

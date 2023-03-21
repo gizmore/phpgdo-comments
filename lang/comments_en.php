@@ -9,7 +9,7 @@ return [
 	'comment_top' => 'Top comment?',
 	'comment_approved' => 'Approved At',
 	'comment_approvor' => 'Approved By',
-	
+
 	###########
 	'cfg_comment_email' => 'Send email on new comment?',
 	'cfg_comment_approval' => 'Comment approval engine?.',
@@ -31,14 +31,14 @@ return [
 	'cfg_comment_approval_member' => 'Email approval for members?',
 	'cfg_comment_captcha_guest' => 'Captcha for guests?',
 	'cfg_comment_captcha_member' => 'Captcha for members?',
-	
+
 	'mt_comments_admin' => 'Manage comments',
-	
+
 	'mt_list_comments' => 'Comments on %s',
-	
+
 	'mt_comments_delete' => 'Delete comment',
 	'msg_comment_deleted' => 'The comment has been marked as deleted.',
-	
+
 	'mt_comments_edit' => 'Edit comment',
-	
+
 ];

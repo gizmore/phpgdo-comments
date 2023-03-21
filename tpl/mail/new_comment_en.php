@@ -9,8 +9,8 @@
 <div>----------------------------------------</div>
 <br/>
 <p>You can quickly approve this comment: <a href="<?=$href_approve?>">APPROVE</a>.<br/>
-<br/>
-<br/>
+    <br/>
+    <br/>
 <p>Or delete it: <a href="<?=$href_delete?>">DELETE</a>.</p>
 <br/>
 Kind Regards
