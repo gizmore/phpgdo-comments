@@ -1,20 +1,34 @@
 <?php
+declare(strict_types=1);
 namespace GDO\Comments;
 
 use GDO\Core\GDO;
 use GDO\Core\GDO_Error;
+use GDO\Core\GDO_ErrorFatal;
 use GDO\Core\GDT_Object;
 use GDO\User\GDO_User;
 
+/**
+ * An abstract comments table.
+ * You need to override gdoCommentedObjectTable()
+ *
+ * @version 7.0.3
+ * @since 6.1.0
+ */
 class GDO_CommentTable extends GDO
 {
+
+	public function isTestable(): bool
+	{
+		return !$this->gdoAbstract();
+	}
 
 	################
 	### Comments ###
 	################
-	public static function getCommentedObjectByComment(GDO_Comment $comment, $fetchAs = null)
+	public static function getCommentedObjectByComment(GDO_Comment $comment, GDO $fetchAs = null): ?GDO
 	{
-		$fetchAs = $fetchAs = null ?
+		$fetchAs = $fetchAs === null ?
 			self::table()->gdoCommentedObjectTable() :
 			$fetchAs;
 		return self::table()->select()->
@@ -24,17 +38,17 @@ class GDO_CommentTable extends GDO
 		first()->exec()->fetchObject();
 	}
 
-	/**
-	 * @return GDO
-	 */
-	public function gdoCommentedObjectTable() {}
+	public function gdoCommentedObjectTable(): GDO
+	{
+		throw new GDO_ErrorFatal('err_comment_object_not_given', [$this->gdoHumanName()]);
+	}
 
 	/**
 	 * @param string $className
 	 *
 	 * @return GDO_CommentTable
 	 */
-	public static function getInstance($className)
+	public static function getInstance(string $className): static
 	{
 		$table = GDO::tableFor($className);
 		if (!($table instanceof GDO_CommentTable))
@@ -44,28 +58,28 @@ class GDO_CommentTable extends GDO
 		return $table;
 	}
 
-	public function gdoEnabled() { return true; }
+	public function gdoEnabled(): bool { return true; }
 
-	public function gdoAllowTitle() { return true; }
+	public function gdoAllowTitle(): bool { return true; }
 
-	public function gdoAllowFiles() { return true; }
+	public function gdoAllowFiles(): bool { return true; }
 
-	public function gdoMaxComments(GDO_User $user) { return 100; }
+	public function gdoMaxComments(GDO_User $user): int { return 100; }
 
-	public function canAddComment(GDO_User $user) { return true; }
+	public function canAddComment(GDO_User $user): bool { return true; }
 
 	###########
 	### GDO ###
 	###########
 
-	public function canEditComment(GDO_Comment $comment, GDO_User $user) { return $comment->canEdit($user); }
+	public function canEditComment(GDO_Comment $comment, GDO_User $user): bool { return $comment->canEdit($user); }
 
-	public function canDeleteComment(GDO_Comment $comment, GDO_User $user) { return $comment->canDelete($user); }
+	public function canDeleteComment(GDO_Comment $comment, GDO_User $user): bool { return $comment->canDelete($user); }
 
-	/**
-	 * @return GDO
-	 */
-	public function gdoAbstract(): bool { return !$this->gdoCommentedObjectTable(); }
+	public function gdoAbstract(): bool
+	{
+		return get_class($this) === self::class;
+	}
 
 	public function gdoColumns(): array
 	{
@@ -80,6 +94,6 @@ class GDO_CommentTable extends GDO
 	/**
 	 * @return GDO
 	 */
-	public function getCommentedObject() { return $this->gdoValue('comment_object'); }
+	public function getCommentedObject(): GDO { return $this->gdoValue('comment_object'); }
 
 }

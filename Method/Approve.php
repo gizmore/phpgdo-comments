@@ -2,6 +2,7 @@
 namespace GDO\Comments\Method;
 
 use GDO\Comments\GDO_Comment;
+use GDO\Core\GDT;
 use GDO\Core\GDT_Hook;
 use GDO\Core\GDT_Object;
 use GDO\Core\GDT_Template;
@@ -34,7 +35,7 @@ final class Approve extends Method
 		];
 	}
 
-	public function execute()
+	public function execute(): GDT
 	{
 		$comment = $this->getComment();
 		if ($comment->isApproved())

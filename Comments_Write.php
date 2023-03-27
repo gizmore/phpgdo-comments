@@ -1,8 +1,10 @@
 <?php
+declare(strict_types=1);
 namespace GDO\Comments;
 
 use GDO\Captcha\GDT_Captcha;
 use GDO\Core\GDO;
+use GDO\Core\GDT;
 use GDO\Core\GDT_Hook;
 use GDO\Core\GDT_Object;
 use GDO\Core\GDT_Template;
@@ -19,7 +21,7 @@ use GDO\User\GDO_User;
 /**
  * Abstract comment writing. @TODO: Rename to MethodCommentWrite
  *
- * @version 7.0.1
+ * @version 7.0.3
  * @since 6.3.0
  * @author gizmore
  */
@@ -70,21 +72,28 @@ abstract class Comments_Write extends MethodForm
 		$form->actions()->addField(GDT_Submit::make());
 	}
 
-	public function isCaptchaRequired()
+	public function getMethodTitle(): string
+	{
+		return t('btn_write_comment');
+	}
+
+
+	public function isCaptchaRequired(): string
 	{
 		return Module_Comments::instance()->cfgCaptcha();
 	}
 
-	public function onMethodInit()
+	public function onMethodInit(): ?GDT
 	{
 		$this->object = $this->gdoParameterValue('id');
 		if ($this->gdoCommentsTable()->gdoMaxComments(GDO_User::current()) <= 1)
 		{
 			$this->oldComment = $this->object->getUserComment();
 		}
+		return null;
 	}
 
-	public function execute()
+	public function execute(): GDT
 	{
 		$card = $this->object->renderCard();
 		$card = GDT_HTML::make()->var($card);
@@ -97,7 +106,7 @@ abstract class Comments_Write extends MethodForm
 		return $response;
 	}
 
-	public function formValidated(GDT_Form $form)
+	public function formValidated(GDT_Form $form): GDT
 	{
 		if (isset($this->oldComment))
 		{
@@ -136,10 +145,10 @@ abstract class Comments_Write extends MethodForm
 			}
 		}
 
-		$this->successMessage();
+		return $this->successMessage();
 	}
 
-	private function sendEmail(GDO_Comment $comment)
+	private function sendEmail(GDO_Comment $comment): void
 	{
 		foreach (GDO_User::staff() as $user)
 		{
@@ -147,7 +156,7 @@ abstract class Comments_Write extends MethodForm
 		}
 	}
 
-	private function sendEmailTo(GDO_User $user, GDO_Comment $comment)
+	private function sendEmailTo(GDO_User $user, GDO_Comment $comment): void
 	{
 		$mail = Mail::botMail();
 		$mail->setSubject(tusr($user, 'mail_new_comment_title', [sitename()]));
@@ -161,7 +170,7 @@ abstract class Comments_Write extends MethodForm
 		$mail->sendToUser($user);
 	}
 
-	public function successMessage()
+	public function successMessage(): GDT
 	{
 		return Module_Comments::instance()->cfgApproval() ?
 			$this->redirectMessage('msg_comment_added_approval', null, $this->hrefList()) :

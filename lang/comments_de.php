@@ -9,6 +9,8 @@ return [
 	'comment_top' => 'Top Kommentar?',
 	'comment_approved' => 'Akzeptiert am',
 	'comment_approvor' => 'Akzeptiert von',
+	'err_comment_object_not_given' => 'Die Kommentare für %s haben keine `gdoCommentObject()` Tabelle angegeben.',
+
 	###########
 	'cfg_comment_email' => 'Sende Emails bei neuen Kommentaren.',
 	'cfg_comment_approval' => 'Aktivier Freigabe-Engine.',

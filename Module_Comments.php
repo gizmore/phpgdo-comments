@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace GDO\Comments;
 
 use GDO\Core\GDO_Module;
@@ -9,7 +10,7 @@ use GDO\User\GDO_User;
  * Abstract comments.
  * Reused in news, forum, helpdesk etc.
  *
- * @version 7.0.1
+ * @version 7.0.3
  * @since 5.0.0
  * @author gizmore
  */
@@ -57,28 +58,28 @@ final class Module_Comments extends GDO_Module
 		];
 	}
 
-	public function cfgEmail() { return $this->getConfigValue('comment_email'); }
+	public function cfgEmail(): string { return $this->getConfigVar('comment_email'); }
 
-	public function cfgCaptcha()
+	public function cfgCaptcha(): string
 	{
 		return GDO_User::current()->isMember() ?
 			$this->cfgCaptchaMember() :
 			$this->cfgCaptchaGuest();
 	}
 
-	public function cfgCaptchaMember() { return $this->getConfigValue('comment_captcha_member'); }
+	public function cfgCaptchaMember(): string { return $this->getConfigVar('comment_captcha_member'); }
 
-	public function cfgCaptchaGuest() { return $this->getConfigValue('comment_captcha_guest'); }
+	public function cfgCaptchaGuest(): string { return $this->getConfigVar('comment_captcha_guest'); }
 
-	public function cfgApproval()
+	public function cfgApproval(): string
 	{
 		return GDO_User::current()->isMember() ?
 			$this->cfgApprovalMember() :
 			$this->cfgApprovalGuest();
 	}
 
-	public function cfgApprovalMember() { return $this->getConfigValue('comment_approval_member'); }
+	public function cfgApprovalMember(): string { return $this->getConfigVar('comment_approval_member'); }
 
-	public function cfgApprovalGuest() { return $this->getConfigValue('comment_approval_guest'); }
+	public function cfgApprovalGuest(): string { return $this->getConfigVar('comment_approval_guest'); }
 
 }

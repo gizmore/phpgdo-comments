@@ -2,6 +2,7 @@
 namespace GDO\Comments;
 
 use GDO\Core\GDO;
+use GDO\Core\GDT;
 use GDO\Core\GDT_Object;
 use GDO\Core\GDT_Tuple;
 use GDO\Core\Website;
@@ -30,7 +31,7 @@ abstract class Comments_List extends MethodQueryCards
 		return false;
 	}
 
-	public function setupTitle(GDT_Table $table)
+	public function setupTitle(GDT_Table $table): void
 	{
 		$gdoName = $this->gdoCommentsTable()->gdoHumanName();
 		Website::setTitle(t('mt_list_comments', [
@@ -87,9 +88,10 @@ abstract class Comments_List extends MethodQueryCards
 		];
 	}
 
-	public function onMethodInit()
+	public function onMethodInit(): ?GDT
 	{
 		$this->object = $this->gdoParameterValue('id');
+		return null;
 	}
 
 	public function getQuery(): Query
@@ -102,17 +104,16 @@ abstract class Comments_List extends MethodQueryCards
 		return $query->where('comment_approved IS NOT NULL')->fetchTable($this->gdoFetchAs());
 	}
 
-	public function gdoFetchAs()
+	public function gdoFetchAs(): GDO
 	{
 		return GDO_Comment::table();
 	}
 
-	public function execute()
+	public function execute(): GDT
 	{
 		$card = GDT_HTML::make()->var($this->object->renderCard());
 		$resp = parent::execute();
 		return GDT_Tuple::makeWith($card, $resp);
 	}
-
 
 }

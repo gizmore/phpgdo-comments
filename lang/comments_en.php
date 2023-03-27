@@ -9,6 +9,7 @@ return [
 	'comment_top' => 'Top comment?',
 	'comment_approved' => 'Approved At',
 	'comment_approvor' => 'Approved By',
+	'err_comment_object_not_given' => 'The comment table %s has no `gdoCommentObject()` table given.',
 
 	###########
 	'cfg_comment_email' => 'Send email on new comment?',

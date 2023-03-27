@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace GDO\Comments;
 
 use GDO\DB\Query;
@@ -17,7 +18,7 @@ use GDO\User\GDO_User;
  * Your object is than able to easily add comments to the Comment table, joined via your new CommentsTable table.
  * All relations have foreign keys, as usual.
  *
- * @version 7.0.0
+ * @version 7.0.3
  * @since 5.0.0
  * @author gizmore
  * @see Module_Comments
@@ -32,16 +33,14 @@ trait CommentedObject
 //	 public function gdoCommentTable() { return LUP_RoomComments::table(); } # Really abstract
 //	 public function gdoCommentsEnabled() { return true; } # default true would be ok
 //	 public function gdoCanComment(GDO_User $user) { return true; } default true would be ok
-	public function gdoCommentHrefEdit() { return href('Comments', 'Edit'); }
+	public function gdoCommentHrefEdit(): string { return href('Comments', 'Edit'); }
 	##########################################
 
 
 	/**
 	 * Get the number of comments
-	 *
-	 * @return number
 	 */
-	public function getCommentCount($withDeleted = false, $approvedOnly = true)
+	public function getCommentCount(bool $withDeleted = false, bool $approvedOnly = true): int
 	{
 		return $this->queryCountComments($withDeleted, $approvedOnly);
 	}
@@ -51,10 +50,9 @@ trait CommentedObject
 	 *
 	 * @return int
 	 */
-	public function queryCountComments($withDeleted = false, $approvedOnly = true)
+	public function queryCountComments(bool $withDeleted = false, bool $approvedOnly = true): int
 	{
 		$commentTable = $this->gdoCommentTable();
-		$commentTable instanceof GDO_CommentTable;
 		$query = $commentTable->select('COUNT(*)')->joinObject('comment_id');
 		$query->where("comment_object={$this->getID()}");
 		if (!$withDeleted)
@@ -65,13 +63,13 @@ trait CommentedObject
 		{
 			$query->where('comment_approved IS NOT NULL');
 		}
-		return $query->exec()->fetchValue();
+		return (int) $query->exec()->fetchValue();
 	}
 
 	/**
 	 * In case you only allow one comment per user and object, this gets the comment for a user and object
 	 */
-	public function getUserComment(GDO_User $user = null): ?GDO_Comment
+	public function getUserComment(GDO_User $user = null): ?static
 	{
 		return $this->queryUserComments($user)->first()->exec()->fetchObject();
 	}
@@ -93,7 +91,6 @@ trait CommentedObject
 	public function queryComments($withDeleted = false, $approvedOnly = true)
 	{
 		$commentTable = $this->gdoCommentTable();
-		$commentTable instanceof GDO_CommentTable;
 		$query = $commentTable->select('comment_id_t.*')->
 		fetchTable(GDO_Comment::table())->
 		joinObject('comment_id')->

@@ -1,6 +1,5 @@
 <?php
 namespace GDO\Comments\lang;
-
 return [
 	'gdo_comment' => 'Commento',
 	'link_comments' => '%s commenti',
@@ -9,6 +8,8 @@ return [
 	'comment_top' => 'Commento Top?',
 	'comment_approved' => 'Accettato',
 	'comment_approver' => 'Accettato da',
+	'err_comment_object_not_given' => 'I commenti per %s non specificano una tabella `gdoCommentObject()`.',
+
 	###########
 	'cfg_comment_email' => 'Invia Mail al commento nuovo.',
 	'cfg_comment_approval' => 'Attiva meccanismo approvazione.',

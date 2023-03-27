@@ -1,6 +1,7 @@
 <?php
 namespace GDO\Comments\Method;
 
+use GDO\Core\GDT;
 use GDO\Core\Method;
 use GDO\File\GDT_File;
 use GDO\File\Method\GetFile;
@@ -27,7 +28,7 @@ final class Attachment extends Method
 		return t('attachment');
 	}
 
-	public function execute()
+	public function execute(): GDT
 	{
 		$id = $this->gdoParameterVar('id');
 		return GetFile::make()->executeWithId($id);

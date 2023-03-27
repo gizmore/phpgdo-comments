@@ -3,6 +3,7 @@ namespace GDO\Comments\Method;
 
 use GDO\Comments\GDO_Comment;
 use GDO\Core\GDO_Error;
+use GDO\Core\GDT;
 use GDO\Core\GDT_Object;
 use GDO\Date\Time;
 use GDO\Form\GDT_AntiCSRF;
@@ -37,7 +38,7 @@ class Edit extends MethodForm
 		];
 	}
 
-	public function onMethodInit()
+	public function onMethodInit(): ?GDT
 	{
 		$user = GDO_User::current();
 		$this->comment = $this->getComment();
@@ -45,6 +46,7 @@ class Edit extends MethodForm
 		{
 			throw new GDO_Error('err_permission_required');
 		}
+		return null;
 	}
 
 	public function getComment(): GDO_Comment
@@ -71,7 +73,7 @@ class Edit extends MethodForm
 		);
 	}
 
-	public function formValidated(GDT_Form $form)
+	public function formValidated(GDT_Form $form): GDT
 	{
 		$this->comment->saveVars($form->getFormVars());
 		return $this->message('msg_comment_edited')->addField($this->renderPage());

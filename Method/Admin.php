@@ -26,7 +26,7 @@ final class Admin extends MethodQueryTable
 		return t('list_comments', [$n]);
 	}
 
-	public function getTableTitle()
+	public function getTableTitle(): string
 	{
 		return $this->getMethodTitle();
 	}
