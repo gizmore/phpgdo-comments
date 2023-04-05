@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace GDO\Comments\Method;
 
 use GDO\Core\GDT;
@@ -9,7 +10,7 @@ use GDO\File\Method\GetFile;
 /**
  * Comment attachment download.
  *
- * @version 7.0.1
+ * @version 7.0.3
  * @since 6.5.0
  * @author gizmore
  */
