@@ -17,6 +17,11 @@ use GDO\File\Method\GetFile;
 final class Attachment extends Method
 {
 
+	public function isTrivial(): bool
+	{
+		return false;
+	}
+
 	public function gdoParameters(): array
 	{
 		return [

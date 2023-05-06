@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace GDO\Comments\Method;
 
 use GDO\Comments\GDO_Comment;
@@ -15,12 +16,17 @@ use GDO\Util\Common;
 /**
  * Delete a comment.
  *
- * @version 7.0.1
+ * @version 7.0.3
  * @since 6.9.0
  * @author gizmore
  */
 final class Delete extends Method
 {
+
+	public function isTrivial(): bool
+	{
+		return false;
+	}
 
 	public function getMethodTitle(): string
 	{
@@ -57,7 +63,7 @@ final class Delete extends Method
 		return $this->gdoParameterValue('id');
 	}
 
-	public function deleteComment(GDO_Comment $comment)
+	public function deleteComment(GDO_Comment $comment): void
 	{
 		$comment->markDeleted();
 
@@ -66,7 +72,7 @@ final class Delete extends Method
 		GDT_Hook::callWithIPC('CommentDeleted', $comment);
 	}
 
-	public function sendEmail(GDO_Comment $comment)
+	public function sendEmail(GDO_Comment $comment): void
 	{
 		foreach (GDO_User::staff() as $user)
 		{
@@ -74,7 +80,7 @@ final class Delete extends Method
 		}
 	}
 
-	private function sendEmailTo(GDO_User $user, GDO_Comment $comment)
+	private function sendEmailTo(GDO_User $user, GDO_Comment $comment): void
 	{
 		$mail = Mail::botMail();
 		$mail->setSubject(tusr($user, 'mail_deleted_comment_title', [sitename()]));

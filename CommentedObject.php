@@ -63,7 +63,7 @@ trait CommentedObject
 		{
 			$query->where('comment_approved IS NOT NULL');
 		}
-		return (int) $query->exec()->fetchValue();
+		return (int) $query->exec()->fetchVar();
 	}
 
 	/**

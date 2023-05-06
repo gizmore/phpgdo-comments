@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace GDO\Comments\Method;
 
 use GDO\Comments\GDO_Comment;
@@ -16,7 +17,7 @@ use GDO\User\GDO_User;
 /**
  * Edit a comment.
  *
- * @version 7.0.2
+ * @version 7.0.3
  * @since 6.4.0
  * @author gizmore
  * @see Comments_List
@@ -38,16 +39,26 @@ class Edit extends MethodForm
 		];
 	}
 
-	public function onMethodInit(): ?GDT
+	/**
+	 * Check if user has edit permissions for a comment.
+	 */
+	public function hasPermission(GDO_User $user, string &$error, array &$args): bool
 	{
+		$comment = $this->getComment();
 		$user = GDO_User::current();
-		$this->comment = $this->getComment();
-		if (!$this->comment->canEdit($user))
+		if (!$comment->canEdit($user))
 		{
-			throw new GDO_Error('err_permission_required');
+			$error = 'err_permission_required';
+			$args = [t('btn_edit')];
+			return false;
 		}
-		return null;
+		return true;
 	}
+
+//	public function onMethodInit(): ?GDT
+//	{
+//		return null;
+//	}
 
 	public function getComment(): GDO_Comment
 	{

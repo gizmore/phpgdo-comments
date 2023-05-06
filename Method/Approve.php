@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace GDO\Comments\Method;
 
 use GDO\Comments\GDO_Comment;
@@ -15,12 +16,17 @@ use GDO\User\GDO_User;
 /**
  * Comment approvement.
  *
- * @version 7.0.1
+ * @version 7.0.3
  * @since 6.5.0
  * @author gizmore
  */
 final class Approve extends Method
 {
+
+	public function isTrivial(): bool
+	{
+		return false;
+	}
 
 	public function getMethodTitle(): string
 	{
