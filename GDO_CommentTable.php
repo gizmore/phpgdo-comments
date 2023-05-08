@@ -3,8 +3,8 @@ declare(strict_types=1);
 namespace GDO\Comments;
 
 use GDO\Core\GDO;
-use GDO\Core\GDO_Error;
-use GDO\Core\GDO_ErrorFatal;
+use GDO\Core\GDO_Exception;
+use GDO\Core\GDO_ExceptionFatal;
 use GDO\Core\GDT_Object;
 use GDO\User\GDO_User;
 
@@ -40,7 +40,7 @@ class GDO_CommentTable extends GDO
 
 	public function gdoCommentedObjectTable(): GDO
 	{
-		throw new GDO_ErrorFatal('err_comment_object_not_given', [$this->gdoHumanName()]);
+		throw new GDO_ExceptionFatal('err_comment_object_not_given', [$this->gdoHumanName()]);
 	}
 
 	/**
@@ -53,7 +53,7 @@ class GDO_CommentTable extends GDO
 		$table = GDO::tableFor($className);
 		if (!($table instanceof GDO_CommentTable))
 		{
-			throw new GDO_Error('err_comment_table', [html($className)]);
+			throw new GDO_Exception('err_comment_table', [html($className)]);
 		}
 		return $table;
 	}

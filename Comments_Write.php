@@ -50,7 +50,7 @@ abstract class Comments_Write extends MethodForm
 		];
 	}
 
-	public function createForm(GDT_Form $form): void
+	protected function createForm(GDT_Form $form): void
 	{
 		$gdo = GDO_Comment::table();
 		$form->addField($gdo->gdoColumn('comment_message'));

@@ -3,7 +3,7 @@ declare(strict_types=1);
 namespace GDO\Comments\Method;
 
 use GDO\Comments\GDO_Comment;
-use GDO\Core\GDO_Error;
+use GDO\Core\GDO_Exception;
 use GDO\Core\GDT;
 use GDO\Core\GDT_Object;
 use GDO\Date\Time;
@@ -65,7 +65,7 @@ class Edit extends MethodForm
 		return $this->gdoParameterValue('comment');
 	}
 
-	public function createForm(GDT_Form $form): void
+	protected function createForm(GDT_Form $form): void
 	{
 		$this->comment = $this->getComment();
 		$form->addFields(
