@@ -32,7 +32,7 @@ class Edit extends MethodForm
 
 	public function isShownInSitemap(): bool { return false; }
 
-	public function gdoParameters(): array
+    public function gdoParameters(): array
 	{
 		return [
 			GDT_Object::make('comment')->notNull()->table(GDO_Comment::table()),
