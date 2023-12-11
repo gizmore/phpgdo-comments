@@ -72,13 +72,12 @@ abstract class Comments_List extends MethodQueryCards
 			$this->object->renderName(),
 			$count,
 		]);
-	}	public function gdoTable(): GDO
+	}
+
+    public function gdoTable(): GDO
 	{
 		return $this->gdoCommentsTable();
 	}
-
-
-
 
 	public function gdoParameters(): array
 	{

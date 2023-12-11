@@ -24,8 +24,12 @@ if ($gdo->hasFile())
 	);
 }
 
-$card->actions()->addFields(
-	GDT_EditButton::make()->href($gdo->hrefEdit())->writeable($gdo->canEdit($user)),
-);
+if ($gdo->canEdit($user))
+{
+    $card->actions()->addFields(
+        GDT_EditButton::make()->href($gdo->hrefEdit())->writeable($gdo->canEdit($user)),
+    );
+}
+
 
 echo $card->render();

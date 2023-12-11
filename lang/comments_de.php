@@ -39,5 +39,6 @@ return [
 	'msg_comment_deleted' => 'Der Kommentar wurde als gelöscht markiert.',
 
 	'mt_comments_edit' => 'Kommentar bearbeiten',
+    'add_comment' => 'Kommentieren',
 
 ];

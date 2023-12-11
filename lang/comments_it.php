@@ -38,4 +38,5 @@ return [
 	'msg_comment_deleted' => 'Ua fa\'ailogaina le fa\'amatalaga ua tapeina.',
 
 	'mt_comments_edit' => 'Commento modifica',
+    'add_comment' => 'Lascia un commento',
 ];
