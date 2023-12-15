@@ -26,7 +26,19 @@ abstract class Comments_List extends MethodQueryCards
 	public const LAST_LIST_KEY = 'comments_list_last';
 	protected ?GDO $object;
 
-	public function isTrivial(): bool
+    public function getDefaultOrder(): ?string
+    {
+        return 'comment_created ASC';
+    }
+
+    public function getExtraFieldNames(): array
+    {
+        return [
+            'comment_created',
+        ];
+    }
+
+    public function isTrivial(): bool
 	{
 		return false;
 	}

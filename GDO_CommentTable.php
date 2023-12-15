@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace GDO\Comments;
 
 use GDO\Core\GDO;
+use GDO\Core\GDO_DBException;
 use GDO\Core\GDO_Exception;
 use GDO\Core\GDO_ExceptionFatal;
 use GDO\Core\GDT_Object;
@@ -26,7 +27,11 @@ class GDO_CommentTable extends GDO
 	################
 	### Comments ###
 	################
-	public static function getCommentedObjectByComment(GDO_Comment $comment, GDO $fetchAs = null): ?GDO
+    /**
+     * @throws GDO_DBException
+     * @throws GDO_ExceptionFatal
+     */
+    public static function getCommentedObjectByCommentS(GDO_Comment $comment, GDO $fetchAs = null): ?GDO
 	{
 		$fetchAs = $fetchAs === null ?
 			self::table()->gdoCommentedObjectTable() :
@@ -37,6 +42,15 @@ class GDO_CommentTable extends GDO
 		where("comment_id={$comment->getID()}")->
 		first()->exec()->fetchObject();
 	}
+
+    /**
+     * @throws GDO_DBException
+     * @throws GDO_ExceptionFatal
+     */
+    public function getCommentedObjectByComment(GDO_Comment $comment, GDO $fetchAs = null): ?GDO
+    {
+        return self::getCommentedObjectByCommentS($comment, $fetchAs);
+    }
 
 	public function gdoCommentedObjectTable(): GDO
 	{

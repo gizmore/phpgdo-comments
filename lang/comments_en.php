@@ -21,7 +21,7 @@ return [
 	'mt_comment_edit' => 'Edit comment',
 	'msg_comment_edited' => 'The comment has been edited.',
 	'msg_comment_approved' => 'The comment has been approved.',
-	'err_comment_already_approved' => 'The comment was already appproved.',
+	'err_comment_already_approved' => 'The comment was already approved.',
 	###########
 	'list_comments' => '%s comments',
 	###########
@@ -39,7 +39,20 @@ return [
 
 	'mt_comments_delete' => 'Delete comment',
 	'msg_comment_deleted' => 'The comment has been marked as deleted.',
+    'mail_deleted_comment_title' => 'Comment deleted [%s]',
+    'err_comment_already_deleted' => 'This comment was already marked as deleted.',
 
 	'mt_comments_edit' => 'Edit comment',
     'add_comment' => 'Add comment',
+
+    'mails_new_comment' => 'New Comment',
+    'mailb_new_comment' => 'Dear %s,
+        A new comment has been made on %s.
+        From: %s
+        Topic: %s
+        Message: %s
+        
+        Kind Regards,
+        The %2$s team',
+
 ];

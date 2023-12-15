@@ -36,7 +36,19 @@ return [
 	'mt_list_comments' => 'Commenti su %s',
 	'mt_comments_delete' => 'Elimina commento',
 	'msg_comment_deleted' => 'Ua fa\'ailogaina le fa\'amatalaga ua tapeina.',
+    'mail_deleted_comment_title' => 'Kommentar gelöscht [%s]',
+    'err_comment_already_deleted' => 'Dieser Kommentar wurde bereits als gelöscht markiert.',
 
 	'mt_comments_edit' => 'Commento modifica',
     'add_comment' => 'Lascia un commento',
+
+    'mails_new_comment' => 'Neuer Kommentar',
+    'mailb_new_comment' => 'Hallo %s,
+        Es wurde ein neuer Kommentar auf %s eingetragen.
+        Von: %s
+        Thema: %s
+        Nachricht: %s
+        
+        Viele Grüße
+        Das %2$s Team.',
 ];

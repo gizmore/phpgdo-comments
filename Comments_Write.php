@@ -4,6 +4,8 @@ namespace GDO\Comments;
 
 use GDO\Captcha\GDT_Captcha;
 use GDO\Core\GDO;
+use GDO\Core\GDO_ArgError;
+use GDO\Core\GDO_ExceptionFatal;
 use GDO\Core\GDT;
 use GDO\Core\GDT_Hook;
 use GDO\Core\GDT_Object;
@@ -43,12 +45,23 @@ abstract class Comments_Write extends MethodForm
 
 	abstract public function gdoCommentsTable(): GDO_CommentTable;
 
-	public function gdoParameters(): array
+    /**
+     * @throws GDO_ExceptionFatal
+     */
+    public function gdoParameters(): array
 	{
 		return [
 			GDT_Object::make('id')->table($this->gdoCommentsTable()->gdoCommentedObjectTable())->notNull(),
 		];
 	}
+
+    /**
+     * @throws GDO_ArgError
+     */
+    protected function getObject(): GDO
+    {
+        return $this->gdoParameterValue('id');
+    }
 
 	protected function createForm(GDT_Form $form): void
 	{
@@ -136,7 +149,7 @@ abstract class Comments_Write extends MethodForm
 			if (Module_Comments::instance()->cfgEmail() || $approval)
 			{
 				$this->sendEmail($comment);
-			}
+            }
 
 			GDT_Hook::callWithIPC('CommentAdded', $comment);
 			if (!$approval)
@@ -152,7 +165,7 @@ abstract class Comments_Write extends MethodForm
 	{
 		foreach (GDO_User::staff() as $user)
 		{
-			$this->sendEmailTo($user, $comment);
+            $this->sendEmailTo($user, $comment);
 		}
 	}
 
@@ -167,7 +180,7 @@ abstract class Comments_Write extends MethodForm
 			'href_delete' => $comment->urlDelete(),
 		];
 		$mail->setBody(GDT_Template::phpUser($user, 'Comments', 'mail/new_comment.php', $tVars));
-		$mail->sendToUser($user);
+        $mail->sendToUser($user);
 	}
 
 	public function successMessage(): GDT

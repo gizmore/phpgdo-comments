@@ -36,7 +36,7 @@ final class Approve extends Method
 	public function gdoParameters(): array
 	{
 		return [
-			GDT_Object::make('comment')->table(GDO_Comment::table())->notNull(),
+			GDT_Object::make('id')->table(GDO_Comment::table())->notNull(),
 			GDT_Token::make('token')->notNull(),
 		];
 	}

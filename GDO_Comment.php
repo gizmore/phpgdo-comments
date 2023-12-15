@@ -110,12 +110,12 @@ final class GDO_Comment extends GDO
 
 	public function urlApprove(): string
 	{
-		return url('Comments', 'Approve', '&comment=' . $this->getID() . '&token=' . $this->gdoHashcode());
+		return url('Comments', 'Approve', '&id=' . $this->getID() . '&token=' . $this->gdoHashcode());
 	}
 
 	public function urlDelete()
 	{
-		return url('Comments', 'Delete', '&comment=' . $this->getID() . '&token=' . $this->gdoHashcode());
+		return url('Comments', 'Delete', '&id=' . $this->getID() . '&token=' . $this->gdoHashcode());
 	}
 
 }

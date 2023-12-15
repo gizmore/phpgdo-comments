@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace GDO\Comments\Method;
 
 use GDO\Comments\GDO_Comment;
+use GDO\Core\GDO_ArgError;
 use GDO\Core\GDT;
 use GDO\Core\GDT_Hook;
 use GDO\Core\GDT_Object;
@@ -41,14 +42,17 @@ final class Delete extends Method
 		];
 	}
 
-	public function execute(): GDT
+    /**
+     * @throws GDO_ArgError
+     */
+    public function execute(): GDT
 	{
 		$comment = $this->getComment();
 		if ($comment->isDeleted())
 		{
 			return $this->error('err_comment_already_deleted');
 		}
-		if ($comment->gdoHashcode() !== Common::getRequestString('token'))
+		if ($comment->gdoHashcode() !== $this->gdoParameterVar('token'))
 		{
 			return $this->error('err_token');
 		}

@@ -37,8 +37,20 @@ return [
 	'mt_list_comments' => 'Kommentare auf %s',
 	'mt_comments_delete' => 'Kommentar löschen',
 	'msg_comment_deleted' => 'Der Kommentar wurde als gelöscht markiert.',
+    'mail_deleted_comment_title' => 'Kommentar gelöscht [%s]',
+    'err_comment_already_deleted' => 'Dieser Kommentar wurde bereits als gelöscht markiert.',
 
 	'mt_comments_edit' => 'Kommentar bearbeiten',
     'add_comment' => 'Kommentieren',
+
+    'mails_new_comment' => 'Neuer Kommentar',
+    'mailb_new_comment' => 'Hallo %s,
+        Es wurde ein neuer Kommentar auf %s eingetragen.
+        Von: %s
+        Thema: %s
+        Nachricht: %s
+        
+        Viele Grüße
+        Das %2$s Team.',
 
 ];

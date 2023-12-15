@@ -2,6 +2,8 @@
 declare(strict_types=1);
 namespace GDO\Comments;
 
+use GDO\Core\GDO_DBException;
+use GDO\Core\GDO_ExceptionFatal;
 use GDO\Core\GDO_Module;
 use GDO\Core\GDT_Checkbox;
 use GDO\User\GDO_User;
@@ -81,5 +83,20 @@ final class Module_Comments extends GDO_Module
 	public function cfgApprovalMember(): string { return $this->getConfigVar('comment_approval_member'); }
 
 	public function cfgApprovalGuest(): string { return $this->getConfigVar('comment_approval_guest'); }
+
+    #############
+    ### Hooks ###
+    #############
+    /**
+     * @throws GDO_DBException
+     * @throws GDO_ExceptionFatal
+     */
+    public function hookCommentAdded(GDO_Comment $comment): void
+    {
+        if ($this->cfgEmail())
+        {
+            NewCommentMail::sendMails($comment);
+        }
+    }
 
 }
