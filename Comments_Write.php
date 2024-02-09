@@ -112,10 +112,7 @@ abstract class Comments_Write extends MethodForm
 		$card = GDT_HTML::make()->var($card);
 		$result = parent::execute();
 		$response = GDT_Tuple::makeWith($card);
-		if ($result)
-		{
-			$response->addField($result);
-		}
+		$response->addField($result);
 		return $response;
 	}
 
