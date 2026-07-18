@@ -69,7 +69,7 @@ trait CommentedObject
 	/**
 	 * In case you only allow one comment per user and object, this gets the comment for a user and object
 	 */
-	public function getUserComment(GDO_User $user = null): ?static
+	public function getUserComment(GDO_User $user = null): ?GDO_Comment
 	{
 		return $this->queryUserComments($user)->first()->exec()->fetchObject();
 	}
