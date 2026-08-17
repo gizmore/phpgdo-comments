@@ -44,7 +44,7 @@ final class Admin extends MethodQueryTable
 		);
 	}
 
-	public function getQuery(): Query
+	public function gdoQuery(): Query
 	{
 		return GDO_Comment::table()->select()->order('comment_created DESC');
 	}

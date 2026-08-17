@@ -105,7 +105,7 @@ abstract class Comments_List extends MethodQueryCards
 		return null;
 	}
 
-	public function getQuery(): Query
+	public function gdoQuery(): Query
 	{
 		$query = $this->gdoTable()
 			->select('comment_id_t.*')
