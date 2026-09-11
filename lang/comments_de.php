@@ -28,10 +28,10 @@ return [
 	'mail_new_comment_title' => '[%s] Neuer Kommentar',
 	'mail_approved_comment_title' => '[%s] Kommentar freigeschaltet',
 	###########
-	'cfg_comment_approval_guest' => 'Email approval for guests?',
-	'cfg_comment_approval_member' => 'Email approval for members?',
-	'cfg_comment_captcha_guest' => 'Captcha for guests?',
-	'cfg_comment_captcha_member' => 'Captcha for members?',
+	'cfg_comment_approval_guest' => 'E-Mail-Freigabe für Gäste?',
+	'cfg_comment_approval_member' => 'E-Mail-Freigabe für Mitglieder?',
+	'cfg_comment_captcha_guest' => 'Captcha für Gäste?',
+	'cfg_comment_captcha_member' => 'Captcha für Mitglieder?',
 
 	'mt_comments_admin' => 'Kommentare administrieren',
 	'mt_list_comments' => 'Kommentare auf %s',
